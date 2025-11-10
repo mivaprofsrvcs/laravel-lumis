@@ -29,20 +29,18 @@ it('builds OR search via assoc map and sets function name', function () {
 		]
 	);
 
-	[$name, $payload] = decodeFirstFunction($apiClient);
+	$req = decodeRequest($apiClient);
+	$search = findFilter($req, 'search');
+	$odc = findFilter($req, 'ondemandcolumns');
 
-	expect($name)->toBe('ProductList_Load_Query');
+	expect($req['Function'] ?? null)->toBe('ProductList_Load_Query');
 
-	expect($payload)->toHaveKey('Count', 25)
-		->and($payload)->toHaveKey('Offset', 10)
-		->and($payload)->toHaveKey('Filter');
-
-	$filters = $payload['Filter'];
-	$search = findFilter($filters, 'search');
-	$odc = findFilter($filters, 'ondemandcolumns');
+	expect($req)->toHaveKey('Count', 25)
+		->and($req)->toHaveKey('Offset', 10)
+		->and($req)->toHaveKey('Filter');
 
 	expect($search)->not->toBeNull()
-		->and($search['value'])->toBeArray()->toHaveCount(2);
+		->and($search['value'])->toHaveCount(2);
 
 	expect($odc)->not->toBeNull()
 		->and($odc['value'])->toContain('url', 'attributes');
@@ -77,12 +75,16 @@ it('builds AND search via list-of-pairs with two top-level search entries', func
 		]
 	);
 
-	[, $payload] = decodeFirstFunction($apiClient);
-	$filters = $payload['Filter'];
+	$req = decodeRequest($apiClient);
+	$filters = $req['Filter'] ?? [];
 
 	$searchFilters = array_values(
 		array_filter($filters, fn ($filter) => ($filter['name'] ?? null) === 'search')
 	);
+
+	expect($req['Function'] ?? null)->toBe('CustomerList_Load_Query');
+
+	expect($req['Function'] ?? null)->toBe('CustomerList_Load_Query');
 
 	expect($searchFilters)->toHaveCount(2)
 		->and($searchFilters[0]['value'])->toHaveCount(1)
@@ -110,11 +112,11 @@ it('builds filters via single-key maps list', function () {
 		]
 	);
 
-	[, $payload] = decodeFirstFunction($apiClient);
-	$filters = $payload['Filter'];
+	$req = decodeRequest($apiClient);
+	$odc = findFilter($req, 'ondemandcolumns');
+	$search = findFilter($req, 'search');
 
-	$odc = findFilter($filters, 'ondemandcolumns');
-	$search = findFilter($filters, 'search');
+	expect($req['Function'] ?? null)->toBe('OrderList_Load_Query');
 
 	expect($odc)->not->toBeNull()
 		->and($odc['value'])->toBe(['items']);
@@ -162,21 +164,20 @@ it('builds SUBWHERE group (OR) inside a single search value array', function () 
 		]
 	);
 
-	[, $payload] = decodeFirstFunction($apiClient);
-	$filters = $payload['Filter'];
+	$req = decodeRequest($apiClient);
+	$search = findFilter($req, 'search');
+	$sub = collect($search['value'])->first(fn ($filter) => ($filter['operator'] ?? null) === 'SUBWHERE');
 
-	$search = findFilter($filters, 'search');
+	expect($req['Function'] ?? null)->toBe('CustomerList_Load_Query');
 
 	expect($search)->not->toBeNull();
-
-	$sub = collect($search['value'])->first(fn ($f) => ($f['operator'] ?? null) === 'SUBWHERE');
 
 	expect($sub)->not->toBeNull()
 		->and($sub['field'])->toBe('search_OR')
 		->and($sub['value'])->toHaveCount(2);
 });
 
-it('applies ondemandcolumns only when provided explicitly (not both)', function () {
+it('applies ondemandcolumns via onDemandColumns argument', function () {
 	$apiClient = resolve(ApiClientService::class);
 
 	$apiClient->listLoadQuery(
@@ -184,23 +185,33 @@ it('applies ondemandcolumns only when provided explicitly (not both)', function 
 		onDemandColumns: ['url']
 	);
 
-	[, $payload1] = decodeFirstFunction($apiClient);
-	$odc1 = findFilter($payload1['Filter'], 'ondemandcolumns');
+	$req = decodeRequest($apiClient);
+	$odc = findFilter($req, 'ondemandcolumns');
 
-	expect($odc1)->not->toBeNull()
-		->and($odc1['value'])->toBe(['url']);
+	expect($req['Function'] ?? null)->toBe('ProductList_Load_Query');
+
+	expect($odc)->not->toBeNull()
+		->and($odc['value'])->toBe(['url']);
+});
+
+it('applies ondemandcolumns via filters parameter (and not the argument)', function () {
+	$apiClient = resolve(ApiClientService::class);
 
 	$apiClient->listLoadQuery(
 		function: 'ProductList_Load_Query',
-		filters: [['name' => 'ondemandcolumns', 'value' => ['attributes']]]
+		filters: [
+			[
+				'name' => 'ondemandcolumns',
+				'value' => ['attributes'],
+			],
+		]
 	);
 
-	[, $payload2] = decodeFirstFunction($apiClient);
+	$req = decodeRequest($apiClient);
+	$odc = findFilter($req, 'ondemandcolumns');
 
-	$odc2 = findFilter($payload2['Filter'], 'ondemandcolumns');
+	expect($req['Function'] ?? null)->toBe('ProductList_Load_Query');
 
-	expect($odc2)->not->toBeNull()
-		->and($odc2['value'])->toBe(['attributes']);
-
-	expect($odc1['value'])->not->toEqual($odc2['value']);
+	expect($odc)->not->toBeNull()
+		->and($odc['value'])->toBe(['attributes']);
 });
