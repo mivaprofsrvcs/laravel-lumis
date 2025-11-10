@@ -1,0 +1,59 @@
+{
+	"name": "mvps/laravel-lumis",
+	"description": "Laravel package providing MVPS Lumis common functionality for integration and task-based services.",
+	"type": "library",
+	"license": "proprietary",
+	"keywords": [
+		"Lumis",
+		"Laravel-Lumis",
+		"MVPS",
+		"Miva Professional Services",
+		"Miva"
+	],
+	"support": {
+        "issues": "https://github.com/mivaprofsrvcs/laravel-lumis/issues",
+        "source": "https://github.com/mivaprofsrvcs/laravel-lumis"
+    },
+	"authors": [
+        {
+            "name": "Patrick Stearns",
+            "email": "pstearns@miva.com"
+        }
+    ],
+	"require": {
+		"php": "^8.2",
+		"illuminate/support": "^10.0",
+		"pdeans/miva-api": "^2.1.1"
+	},
+	"require-dev": {
+		"nunomaduro/collision": "^7.12",
+		"orchestra/testbench": "^8.18",
+		"pestphp/pest": "^2.36",
+		"pestphp/pest-plugin-laravel": "^2.2"
+	},
+	"autoload": {
+		"psr-4": {
+			"MVPS\\Lumis\\": "src/"
+		}
+	},
+	"scripts": {
+		"test": "pest"
+	},
+	"extra": {
+		"laravel": {
+			"providers": [
+				"MVPS\\Lumis\\Providers\\LumisServiceProvider",
+				"MVPS\\Lumis\\Providers\\MivaApiServiceProvider",
+				"MVPS\\Lumis\\Providers\\StoreServiceProvider"
+			]
+		}
+	},
+	"config": {
+		"sort-packages": true,
+		"allow-plugins": {
+			"pestphp/pest-plugin": true
+		}
+	},
+	"minimum-stability": "stable",
+	"prefer-stable": true
+}
