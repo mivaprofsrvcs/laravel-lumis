@@ -49,19 +49,32 @@ class ApiClientService
 	/**
 	 * Build a list-load query and enqueue it on the client.
 	 *
-	 * @param  array<int,string>                 $onDemandColumns
-	 * @param  ?string                           $sort
-	 * @param  ?int                              $count
-	 * @param  ?int                              $offset
+	 * This method prepares a Miva list-load function by setting the provided
+	 * sort, count, offset, and filter options before adding it to the
+	 * client's function queue.
+	 *
+	 * @param  string  $function  The Miva JSON API function name.
+	 * @param  array<string>  $onDemandColumns  List of on-demand columns to include.
+	 * @param  ?string  $sort  Optional column name to sort results by.
+	 * @param  ?int  $count  Optional number of records to return.
+	 * @param  ?int  $offset  Optional number of records to skip.
 	 * @param  array<string,mixed>|array<int,array{name:string,value:mixed}>|null  $filters
+	 *         Filters to apply. Supports:
+	 *         - Assoc map: ['ondemandcolumns' => [...], 'search' => [SearchCond, ...]]
+	 *         - List of pairs: [['name' => '...', 'value' => mixed], ...]
+	 *         - Single-key maps: [['search' => mixed], ['ondemandcolumns' => mixed], ...]
+	 * @return \pdeans\Miva\Api\Client
 	 */
 	public function listLoadQuery(
+		string $function,
 		array $onDemandColumns = [],
 		?string $sort = null,
 		?int $count = null,
 		?int $offset = null,
 		?array $filters = null
 	): MivaApiClient {
+		$this->client->func($function);
+
 		if (! empty($onDemandColumns)) {
 			$this->client->odc($onDemandColumns);
 		}
@@ -88,36 +101,69 @@ class ApiClientService
 	}
 
 	/**
-	 * Accepts either:
-	 *  - associative map: ['ondemandcolumns' => ['url'], 'code' => 'ABC']
-	 *  - list of pairs:   [['name' => 'ondemandcolumns','value' => ['url']], ...]
+	 * Normalize $filters to [['name' => string, 'value' => mixed], ...].
 	 *
-	 * @param  array<string,mixed>|array<int,array{name:string,value:mixed}> $filters
+	 * Accepts one of:
+	 *  A) assoc map:
+	 *     ['ondemandcolumns' => [...], 'search' => [SearchCond|Subwhere, ...], ...]
+	 *  B) list of pairs:
+	 *     [['name' => '...', 'value' => mixed], ...]
+	 *  C) list of single-key maps:
+	 *     [['search' => mixed], ['ondemandcolumns' => mixed], ...]
+	 *
+	 * Notes:
+	 * - For AND logic: pass multiple top-level 'search' entries (B/C), each
+	 *   with a single SearchCond in 'value'.
+	 * - For OR logic: pass one 'search' entry with multiple SearchCond items
+	 *   in 'value'.
+	 * - For parentheses: include a SearchCond with operator 'SUBWHERE' and
+	 *   field 'search_OR' or 'search_AND'.
+	 *
+	 * @param  array<string,mixed>|array<int,array<string,mixed>> $filters
 	 * @return array<int,array{name:string,value:mixed}>
 	 */
 	private function normalizeFilters(array $filters): array
 	{
+		$normalized = [];
+
+		$addFilter = static function (string $name, mixed $value) use (&$normalized): void {
+			$name = trim($name);
+
+			if ($name !== '') {
+				$normalized[] = ['name' => $name, 'value' => $value];
+			}
+		};
+
 		$isAssoc = array_keys($filters) !== range(0, count($filters) - 1);
-		$normalizedFilters = [];
 
 		if ($isAssoc) {
+			// Assoc map
 			foreach ($filters as $name => $value) {
-				$normalizedFilters[] = ['name' => trim((string) $name), 'value' => $value];
+				$addFilter((string) $name, $value);
 			}
 
-			return $normalizedFilters;
+			return $normalized;
 		}
 
-		foreach ($filters as $filter) {
-			if (is_array($filter) && array_key_exists('name', $filter) && array_key_exists('value', $filter)) {
-				$normalizedFilters[] = [
-					'name' => trim((string) $filter['name']),
-					'value' => $filter['value'],
-				];
+		foreach ($filters as $item) {
+			if (! is_array($item) || $item === []) {
+				continue;
+			}
+
+			// Explicit {name,value}
+			if (array_key_exists('name', $item) && array_key_exists('value', $item)) {
+				$addFilter((string) $item['name'], $item['value']);
+
+				continue;
+			}
+
+			// Single-key map
+			if (count($item) === 1) {
+				$addFilter((string) array_key_first($item), current($item));
 			}
 		}
 
-		return $normalizedFilters;
+		return $normalized;
 	}
 
 	/**
