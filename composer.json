@@ -11,15 +11,15 @@
 		"Miva"
 	],
 	"support": {
-        "issues": "https://github.com/mivaprofsrvcs/laravel-lumis/issues",
-        "source": "https://github.com/mivaprofsrvcs/laravel-lumis"
-    },
+		"issues": "https://github.com/mivaprofsrvcs/laravel-lumis/issues",
+		"source": "https://github.com/mivaprofsrvcs/laravel-lumis"
+	},
 	"authors": [
-        {
-            "name": "Patrick Stearns",
-            "email": "pstearns@miva.com"
-        }
-    ],
+		{
+			"name": "Patrick Stearns",
+			"email": "pstearns@miva.com"
+		}
+	],
 	"require": {
 		"php": "^8.2",
 		"illuminate/support": "^10.0",
@@ -34,6 +34,11 @@
 	"autoload": {
 		"psr-4": {
 			"MVPS\\Lumis\\": "src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Tests\\": "tests/"
 		}
 	},
 	"scripts": {
