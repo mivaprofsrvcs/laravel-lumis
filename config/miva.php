@@ -13,8 +13,22 @@ return [
 
 	'api' => [
 		'key' => env('MM_API_KEY'),
+
 		'token' => env('MM_API_TOKEN'),
+
 		'url' => env('MM_API_URL'),
+
+		/*
+		|----------------------------------------------------------------------
+		| SSL Verification
+		|----------------------------------------------------------------------
+		|
+		| Enable or disable SSL verification for Miva API requests.
+		| Defaults to false (0). Set to true (1) to enforce SSL verification.
+		|
+		*/
+
+		'verify_ssl' => (bool) env('MM_API_VERIFY_SSL', false),
 	],
 
 	/*
