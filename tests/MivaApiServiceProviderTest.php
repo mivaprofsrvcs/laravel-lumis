@@ -1,0 +1,41 @@
+<?php
+
+use MVPS\Lumis\Services\ApiClientService;
+use MVPS\Lumis\Services\StoreService;
+use pdeans\Miva\Api\Client as MivaApiClient;
+
+it('resolves ApiClientService singleton and raw client binding', function () {
+	$apiClient = resolve(ApiClientService::class);
+
+	expect($apiClient)->toBeInstanceOf(ApiClientService::class)
+		->and($apiClient)->toBe(resolve(ApiClientService::class));
+
+	expect(resolve(MivaApiClient::class))->toBe($apiClient->client());
+});
+
+it('uses StoreService for store_code and builds headers including UA', function () {
+	$apiClient = resolve(ApiClientService::class);
+	$client = $apiClient->client();
+
+	$options = $client->getOptions();
+	$headers = $client->getHeaders();
+
+	expect($options['store_code'])->toBe(resolve(StoreService::class)->code);
+
+	expect($headers)->toHaveKey('User-Agent')
+		->and($headers['User-Agent'])->toContain('Lumis (Laravel/');
+});
+
+it('applies SSL verification flags from config', function () {
+	config()->set('miva.api.verify_ssl', true);
+
+	$apiClient = resolve(ApiClientService::class);
+
+	$options = $apiClient->client()->getOptions();
+	$http = $options['http_client'] ?? [];
+
+	expect($http)->toMatchArray([
+		CURLOPT_SSL_VERIFYPEER => 1,
+		CURLOPT_SSL_VERIFYHOST => 2,
+	]);
+});
