@@ -3,10 +3,11 @@
 namespace MVPS\Lumis\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use MVPS\Lumis\Services\ApiClientService;
+use MVPS\Lumis\MivaApiManager;
 
 /**
  * @see \MVPS\Lumis\Services\ApiClientService
+ * @mixin \MVPS\Lumis\MivaApiManager
  * @mixin \MVPS\Lumis\Services\ApiClientService
  * @mixin \pdeans\Miva\Api\Client
  *
@@ -25,11 +26,8 @@ use MVPS\Lumis\Services\ApiClientService;
  */
 class MivaApi extends Facade
 {
-	/**
-	 * @inheritdoc
-	 */
 	protected static function getFacadeAccessor(): string
 	{
-		return ApiClientService::class;
+		return MivaApiManager::class;
 	}
 }

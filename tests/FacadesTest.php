@@ -16,5 +16,5 @@ it('resolves MivaApi facade and proxies builder methods', function () {
 });
 
 it('resolves Store facade and returns url', function () {
-	expect(Store::url())->toBe('https://example.test');
+	expect(Store::url())->toBe('https://default.test');
 });

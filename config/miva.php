@@ -4,55 +4,42 @@ return [
 
 	/*
 	|--------------------------------------------------------------------------
-	| Miva JSON API Configuration
+	| Default connection name
 	|--------------------------------------------------------------------------
-	|
-	| Settings for connecting to the Miva JSON API.
-	|
 	*/
-
-	'api' => [
-		'key' => env('MM_API_KEY'),
-
-		'token' => env('MM_API_TOKEN'),
-
-		'url' => env('MM_API_URL'),
-
-		/*
-		|----------------------------------------------------------------------
-		| SSL Verification
-		|----------------------------------------------------------------------
-		|
-		| Enable or disable SSL verification for Miva API requests.
-		| Defaults to false (0). Set to true (1) to enforce SSL verification.
-		|
-		*/
-
-		'verify_ssl' => (bool) env('MM_API_VERIFY_SSL', false),
-	],
+	'default' => env('MM_CONNECTION', 'default'),
 
 	/*
 	|--------------------------------------------------------------------------
-	| Miva Store Settings
+	| Connections
 	|--------------------------------------------------------------------------
 	|
-	| Configuration settings specific to the Miva store.
+	| Each connection defines api + store settings for a single Miva store.
 	|
 	*/
-
-	'store' => [
-		'auth' => [
-			'password' => env('MM_STORE_AUTH_PASSWORD', ''),
-			'username' => env('MM_STORE_AUTH_USERNAME', ''),
+	'connections' => [
+		'default' => [
+			'api' => [
+				'key' => env('MM_API_KEY'),
+				'token' => env('MM_API_TOKEN'),
+				'url' => env('MM_API_URL'),
+				'verify_ssl' => (bool) env('MM_API_VERIFY_SSL', false),
+			],
+			'store' => [
+				'auth' => [
+					'username' => env('MM_STORE_AUTH_USERNAME', ''),
+					'password' => env('MM_STORE_AUTH_PASSWORD', ''),
+				],
+				'code' => env('MM_STORE_CODE'),
+				'graphics_path' => env('MM_STORE_GRAPHICS_PATH', 'graphics/00000001/'),
+				'root_path' => env('MM_STORE_ROOT_PATH', '/mm5/'),
+				'url' => env('MM_STORE_URL'),
+			],
 		],
 
-		'code' => env('MM_STORE_CODE'),
-
-		'graphics_path' => env('MM_STORE_GRAPHICS_PATH', 'graphics/00000001/'),
-
-		'root_path' => env('MM_STORE_ROOT_PATH', '/mm5/'),
-
-		'url' => env('MM_STORE_URL'),
+		// Add more named connections as needed:
+		// 'teamsites' => [ 'api' => [...], 'store' => [...] ],
+		// 'conferencesites' => [ 'api' => [...], 'store' => [...] ],
 	],
 
 ];

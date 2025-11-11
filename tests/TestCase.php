@@ -27,20 +27,37 @@ class TestCase extends Orchestra
 	protected function defineEnvironment($app): void
 	{
 		$app['config']->set('miva', [
-			'api' => [
-				'key'        => 'priv_key',
-				'token'      => 'token_123',
-				'url'        => 'https://example.test/mm5/json.mvc',
-				'verify_ssl' => false,
-			],
-			'store' => [
-				'code'          => 's01',
-				'url'           => 'https://example.test',
-				'graphics_path' => 'graphics/00000001/',
-				'root_path'     => '/mm5/',
-				'auth'          => [
-					'username' => '',
-					'password' => '',
+			'default' => 'default',
+			'connections' => [
+				'default' => [
+					'api' => [
+						'key' => 'priv_key',
+						'token' => 'token_123',
+						'url' => 'https://default.test/mm5/json.mvc',
+						'verify_ssl' => false,
+					],
+					'store' => [
+						'auth' => ['username' => '', 'password' => ''],
+						'code' => 's01',
+						'url' => 'https://default.test',
+						'graphics_path' => 'graphics/00000001/',
+						'root_path' => '/mm5/',
+					],
+				],
+				'store02' => [
+					'api' => [
+						'key' => 'priv_key',
+						'token' => 'token_123',
+						'url' => 'https://store02.test/mm5/json.mvc',
+						'verify_ssl' => true,
+					],
+					'store' => [
+						'auth' => ['username' => 'u', 'password' => 'p'],
+						'code' => 's02',
+						'url' => 'https://store02.test',
+						'graphics_path' => 'graphics/00000002/',
+						'root_path' => '/mm5/',
+					],
 				],
 			],
 		]);

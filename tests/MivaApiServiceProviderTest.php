@@ -27,14 +27,12 @@ it('uses StoreService for store_code and builds headers including UA', function 
 });
 
 it('applies SSL verification flags from config', function () {
-	config()->set('miva.api.verify_ssl', true);
+	config()->set('miva.default', 'default');
+	config()->set('miva.connections.default.api.verify_ssl', true);
 
 	$apiClient = resolve(ApiClientService::class);
 
-	$options = $apiClient->client()->getOptions();
-	$http = $options['http_client'] ?? [];
-
-	expect($http)->toMatchArray([
+	expect($apiClient->client()->getOptions()['http_client'] ?? [])->toMatchArray([
 		CURLOPT_SSL_VERIFYPEER => 1,
 		CURLOPT_SSL_VERIFYHOST => 2,
 	]);

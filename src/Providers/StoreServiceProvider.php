@@ -14,8 +14,11 @@ class StoreServiceProvider extends ServiceProvider implements DeferrableProvider
 	public function register(): void
 	{
 		$this->app->singleton(StoreService::class, function ($app) {
-			$config = (array) $app['config']->get('miva.store', []);
-			$auth = (array) ($config['auth'] ?? []);
+			$config = $app['config'];
+			$connection = (string) $config->get('miva.default', 'default');
+
+			$store = (array) $config->get("miva.connections.$connection.store", []);
+			$auth = (array) ($store['auth'] ?? []);
 
 			$username = trim((string) ($auth['username'] ?? ''));
 			$password = trim((string) ($auth['password'] ?? ''));
@@ -25,10 +28,10 @@ class StoreServiceProvider extends ServiceProvider implements DeferrableProvider
 				: [];
 
 			return new StoreService(
-				code: (string) ($config['code'] ?? ''),
-				url: (string) ($config['url'] ?? ''),
-				graphicsPath: (string) ($config['graphics_path'] ?? 'graphics/'),
-				rootPath: (string) ($config['root_path'] ?? '/mm5/'),
+				code: (string) ($store['code'] ?? ''),
+				url: (string) ($store['url'] ?? ''),
+				graphicsPath: (string) ($store['graphics_path'] ?? 'graphics/'),
+				rootPath: (string) ($store['root_path'] ?? '/mm5/'),
 				auth: $auth
 			);
 		});
