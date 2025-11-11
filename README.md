@@ -37,46 +37,151 @@ config/miva.php
 
 ```php
 return [
-    'default' => env('MM_CONNECTION', 'default'),
+	'default' => env('MM_CONNECTION', 'default'),
 
-    'connections' => [
-        'default' => [
-            'api' => [
-                'key' => env('MM_API_KEY'),
-                'token' => env('MM_API_TOKEN'),
-                'url' => env('MM_API_URL'),
-                'verify_ssl' => (bool) env('MM_API_VERIFY_SSL', false),
-            ],
+	'connections' => [
+		'default' => [
+			'api' => [
+				'key' => env('MM_API_KEY'),
+				'token' => env('MM_API_TOKEN'),
+				'url' => env('MM_API_URL'),
+				'verify_ssl' => (bool) env('MM_API_VERIFY_SSL', false),
+			],
 
-            'store' => [
-                'code' => env('MM_STORE_CODE'),
-                'url' => env('MM_STORE_URL'),
-                'graphics_path' => env('MM_STORE_GRAPHICS_PATH', 'graphics/00000001/'),
-                'root_path' => env('MM_STORE_ROOT_PATH', '/mm5/'),
-                'auth' => [
-                    'username' => env('MM_STORE_AUTH_USERNAME', ''),
-                    'password' => env('MM_STORE_AUTH_PASSWORD', ''),
-                ],
-            ],
-        ],
+			'store' => [
+				'code' => env('MM_STORE_CODE'),
+				'url' => env('MM_STORE_URL'),
+				'graphics_path' => env('MM_STORE_GRAPHICS_PATH', 'graphics/00000001/'),
+				'root_path' => env('MM_STORE_ROOT_PATH', '/mm5/'),
+				'auth' => [
+					'username' => env('MM_STORE_AUTH_USERNAME', ''),
+					'password' => env('MM_STORE_AUTH_PASSWORD', ''),
+				],
+			],
+		],
 
-        // Example of a multi-store connection
-        'store02' => [
-            'api' => [
-                'key' => env('S02_MM_API_KEY'),
-                'token' => env('S02_MM_API_TOKEN'),
-                'url' => env('S02_MM_API_URL'),
-            ],
+		// Example of a multi-store connection
+		'store02' => [
+			'api' => [
+				'key' => env('S02_MM_API_KEY'),
+				'token' => env('S02_MM_API_TOKEN'),
+				'url' => env('S02_MM_API_URL'),
+			],
 
-            'store' => [
-                'code' => env('S02_MM_STORE_CODE'),
-                'url' => env('S02_MM_STORE_URL'),
-                'graphics_path' => env('S02_MM_STORE_GRAPHICS_PATH', 'graphics/00000001/'),
-                'root_path' => env('S02_MM_STORE_ROOT_PATH', '/mm5/'),
-            ],
-        ],
-    ],
+			'store' => [
+				'code' => env('S02_MM_STORE_CODE'),
+				'url' => env('S02_MM_STORE_URL'),
+				'graphics_path' => env('S02_MM_STORE_GRAPHICS_PATH', 'graphics/00000001/'),
+				'root_path' => env('S02_MM_STORE_ROOT_PATH', '/mm5/'),
+			],
+		],
+	],
 ];
+```
+
+## Environment Variables
+
+This package doesn't modify your `.env` automatically. After publishing the config, set the required keys for your stores.
+
+### Single Store (Default Connection)
+
+```shell
+# Miva Store Settings
+MM_STORE_URL=https://example.test
+MM_STORE_CODE=s01
+MM_STORE_ROOT_PATH=/mm5/
+MM_STORE_GRAPHICS_PATH=graphics/00000001/
+
+# Miva Store Basic Auth Creds
+# Only required if your Miva store is protected by HTTP Basic Authentication.
+MM_STORE_AUTH_USERNAME=
+MM_STORE_AUTH_PASSWORD=
+
+# Miva Store JSON API Settings
+MM_API_KEY=api-signature-key
+MM_API_TOKEN=api-access-token
+MM_API_URL="${MM_STORE_URL}${MM_STORE_ROOT_PATH}json.mvc"
+
+# Determines whether SSL certificates should be verified when making API requests.
+# Use "false" in local development environments without valid certificates.
+MM_API_VERIFY_SSL=false
+```
+
+### Multiple Stores (Named Connections)
+
+If you use multiple stores, set a default and add env keys per connection:
+
+```shell
+# Which connection to use when none is specified
+MM_CONNECTION=default
+
+# ...
+
+# Store 02 Connection
+s02_MM_STORE_URL=https://store02.test
+s02_MM_STORE_CODE=s02
+s02_MM_STORE_ROOT_PATH=/mm5/
+s02_MM_STORE_GRAPHICS_PATH=graphics/00000001/
+
+s02_MM_STORE_AUTH_USERNAME=
+s02_MM_STORE_AUTH_PASSWORD=
+
+s02_MM_API_KEY=api-signature-key
+s02_MM_API_TOKEN=api-access-token
+s02_MM_API_URL="${s02_MM_STORE_URL}${s02_MM_STORE_ROOT_PATH}json.mvc"
+s02_MM_API_VERIFY_SSL=true
+```
+
+Below mirrors the `connections` structure in `config/miva.php`.
+
+```php
+// config/miva.php (snippet)
+'default' => env('MM_CONNECTION', 'default'),
+'connections' => [
+	'default' => [
+		'api' => [
+			'key' => env('MM_API_KEY'),
+			'token' => env('MM_API_TOKEN'),
+			'url' => env('MM_API_URL'),
+			'verify_ssl' => env('MM_API_VERIFY_SSL', false),
+		],
+		'store' => [
+			'code' => env('MM_STORE_CODE'),
+			'url' => env('MM_STORE_URL'),
+			'graphics_path' => env('MM_STORE_GRAPHICS_PATH', 'graphics/00000001/'),
+			'root_path' => env('MM_STORE_ROOT_PATH', '/mm5/'),
+			'auth' => [
+				'username' => env('MM_STORE_AUTH_USERNAME', ''),
+				'password' => env('MM_STORE_AUTH_PASSWORD', ''),
+			],
+		],
+	],
+
+	'store02' => [
+		'api' => [
+			'key' => env('s02_MM_API_KEY'),
+			'token' => env('s02_MM_API_TOKEN'),
+			'url' => env('s02_MM_API_URL'),
+			'verify_ssl' => env('s02_MM_API_VERIFY_SSL', true),
+		],
+		'store' => [
+			'code' => env('s02_MM_STORE_CODE'),
+			'url' => env('s02_MM_STORE_URL'),
+			'graphics_path' => env('s02_MM_STORE_GRAPHICS_PATH', 'graphics/00000002/'),
+			'root_path' => env('s02_MM_STORE_ROOT_PATH', '/mm5/'),
+			'auth' => [
+				'username' => env('s02_MM_STORE_AUTH_USERNAME', ''),
+				'password' => env('s02_MM_STORE_AUTH_PASSWORD', ''),
+			],
+		],
+	],
+];
+```
+
+**Tip:** After editing `.env`, run:
+
+```bash
+php artisan config:clear && php artisan config:cache
 ```
 
 ## Facades
@@ -91,9 +196,9 @@ The `MivaApi` facade provides a fluent interface to the underlying Miva API clie
 use MVPS\Lumis\Facades\MivaApi;
 
 MivaApi::func('ProductList_Load_Query')
-    ->count(25)
-    ->odc(['url', 'attributes'])
-    ->add();
+	->count(25)
+	->odc(['url', 'attributes'])
+	->add();
 
 $response = MivaApi::sendRequest('ProductList_Load_Query');
 ```
@@ -104,9 +209,9 @@ When using multiple store connections:
 
 ```php
 MivaApi::connection('store02')
-    ->func('OrderList_Load_Query')
-    ->count(50)
-    ->add();
+	->func('OrderList_Load_Query')
+	->count(50)
+	->add();
 
 $response = MivaApi::connection('store02')->sendRequest('OrderList_Load_Query');
 ```
