@@ -4,19 +4,27 @@ return [
 
 	/*
 	|--------------------------------------------------------------------------
-	| Default connection name
+	| Default Miva Store Connection
 	|--------------------------------------------------------------------------
 	*/
+
 	'default' => env('MM_CONNECTION', 'default'),
 
 	/*
 	|--------------------------------------------------------------------------
-	| Connections
+	| Miva Store Connections
 	|--------------------------------------------------------------------------
 	|
-	| Each connection defines api + store settings for a single Miva store.
+	| Here you may define all of the Miva store connections your application
+	| uses. Each connection contains both the API credentials and
+	| store-specific settings for a single Miva store instance.
+	|
+	| You can configure multiple connections if your application integrates
+	| with more than one store. The "default" connection will be used when
+	| a specific connection name is not provided.
 	|
 	*/
+
 	'connections' => [
 		'default' => [
 			'api' => [
@@ -38,8 +46,8 @@ return [
 		],
 
 		// Add more named connections as needed:
-		// 'teamsites' => [ 'api' => [...], 'store' => [...] ],
-		// 'conferencesites' => [ 'api' => [...], 'store' => [...] ],
+		// 'store02' => [ 'api' => [...], 'store' => [...] ],
+		// 'store03' => [ 'api' => [...], 'store' => [...] ],
 	],
 
 ];
