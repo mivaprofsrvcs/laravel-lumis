@@ -3,12 +3,14 @@
 namespace MVPS\Lumis;
 
 use Illuminate\Support\Manager;
+use InvalidArgumentException;
 use MVPS\Lumis\Services\ApiClientService;
 use MVPS\Lumis\Services\StoreService;
 use pdeans\Miva\Api\Client as MivaApiClient;
 
 /**
  * @property \Illuminate\Foundation\Application $container
+ * @mixin \MVPS\Lumis\Services\ApiClientService
  */
 class MivaApiManager extends Manager
 {
@@ -36,6 +38,10 @@ class MivaApiManager extends Manager
 	protected function createDriver($name): ApiClientService
 	{
 		$config = (array) $this->container['config']->get("miva.connections.$name", []);
+
+		if ($config === []) {
+			throw new InvalidArgumentException("Miva store connection [$name] is not configured.");
+		}
 
 		$api = (array) ($config['api'] ?? []);
 		$store = (array) ($config['store'] ?? []);
