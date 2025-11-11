@@ -2,44 +2,44 @@
 
 namespace MVPS\Lumis\Services;
 
-readonly class StoreService
+final readonly class StoreService
 {
 	/**
 	 * The Miva store authorization credentials.
 	 *
 	 * Typically used with password protected stores (Basic Auth).
 	 *
-	 * @var array
+	 * @var array{username:string, password:string}|array{}
 	 */
-	public array $auth;
+	private array $auth;
 
 	/**
 	 * The Miva store code.
 	 *
 	 * @var string
 	 */
-	public string $code;
+	private string $code;
 
 	/**
 	 * The Miva store graphics path.
 	 *
 	 * @var string
 	 */
-	public string $graphicsPath;
+	private string $graphicsPath;
 
 	/**
 	 * The Miva store root path (root directory for graphics, modules, etc).
 	 *
 	 * @var string
 	 */
-	public string $rootPath;
+	private string $rootPath;
 
 	/**
 	 * The Miva store url.
 	 *
 	 * @var string
 	 */
-	public string $url;
+	private string $url;
 
 	/**
 	 * Create a new Miva store service instance.
@@ -67,6 +67,8 @@ readonly class StoreService
 
 	/**
 	 * Get the store auth array.
+	 *
+	 * @return array{username:string,password:string}|array{}
 	 */
 	public function auth(): array
 	{
