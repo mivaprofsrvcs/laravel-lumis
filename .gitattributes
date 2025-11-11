@@ -1,18 +1,23 @@
 * text=auto eol=lf
 
-*.php diff=php
+*.php   diff=php
 *.blade.php diff=html
-*.css diff=css
-*.html diff=html
-*.md diff=markdown
+*.css   diff=css
+*.html  diff=html
+*.md    diff=markdown
 
-*.png binary
-*.jpg binary
+*.png  binary
+*.jpg  binary
 *.jpeg binary
-*.gif binary
-*.ico binary
-*.pdf binary
-*.zip binary
+*.gif  binary
+*.ico  binary
+*.pdf  binary
+*.zip  binary
+*.phar binary
+*.ttf  binary
+*.otf  binary
+*.woff binary
+*.woff2 binary
 
 /.github            export-ignore
 /.gitignore         export-ignore
@@ -37,8 +42,9 @@
 /dist               export-ignore
 /docs               export-ignore
 /examples           export-ignore
-.styleci.yml        export-ignore
+/styleci.yml        export-ignore
+/composer.lock      export-ignore
 
-/build/**           linguist-generated
-/dist/**            linguist-generated
-/docs/**            linguist-documentation
+build/** linguist-generated
+dist/**  linguist-generated
+docs/**  linguist-documentation

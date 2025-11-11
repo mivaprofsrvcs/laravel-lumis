@@ -10,11 +10,9 @@ coverage/
 .DS_Store
 Thumbs.db
 *.log
-storage/
 .cache/
 .tmp/
 dist/
 build/
-public/
 .env
 .env.*
