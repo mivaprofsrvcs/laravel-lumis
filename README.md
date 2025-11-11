@@ -133,6 +133,18 @@ $authHeader = Store::authHeader();
 // ['Authorization' => 'Basic ...']
 ```
 
+#### Named Connections
+
+When using multiple store connections:
+
+```php
+$baseUrl = Store::connection('store02')->url();
+// https://example.test
+
+$graphicsUrl = Store::connection('store02')->graphicsUrl();
+// https://example.test/mm5/graphics/00000001/
+```
+
 ## Core Classes
 
 ### `MVPS\Lumis\Services\ApiClientService`

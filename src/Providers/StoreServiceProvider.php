@@ -4,6 +4,7 @@ namespace MVPS\Lumis\Providers;
 
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
+use MVPS\Lumis\MivaStoreManager;
 use MVPS\Lumis\Services\StoreService;
 
 class StoreServiceProvider extends ServiceProvider implements DeferrableProvider
@@ -13,28 +14,15 @@ class StoreServiceProvider extends ServiceProvider implements DeferrableProvider
 	 */
 	public function register(): void
 	{
-		$this->app->singleton(StoreService::class, function ($app) {
-			$config = $app['config'];
-			$connection = (string) $config->get('miva.default', 'default');
+		$this->app->singleton(
+			MivaStoreManager::class,
+			fn ($app) => new \MVPS\Lumis\MivaStoreManager($app)
+		);
 
-			$store = (array) $config->get("miva.connections.$connection.store", []);
-			$auth = (array) ($store['auth'] ?? []);
-
-			$username = trim((string) ($auth['username'] ?? ''));
-			$password = trim((string) ($auth['password'] ?? ''));
-
-			$auth = $username !== '' && $password !== ''
-				? ['username' => $username, 'password' => $password]
-				: [];
-
-			return new StoreService(
-				code: (string) ($store['code'] ?? ''),
-				url: (string) ($store['url'] ?? ''),
-				graphicsPath: (string) ($store['graphics_path'] ?? 'graphics/'),
-				rootPath: (string) ($store['root_path'] ?? '/mm5/'),
-				auth: $auth
-			);
-		});
+		$this->app->singleton(
+			StoreService::class,
+			fn ($app) => $app->make(MivaStoreManager::class)->connection()
+		);
 	}
 
 	/**
@@ -42,6 +30,9 @@ class StoreServiceProvider extends ServiceProvider implements DeferrableProvider
 	 */
 	public function provides(): array
 	{
-		return [StoreService::class];
+		return [
+			MivaStoreManager::class,
+			StoreService::class,
+		];
 	}
 }
