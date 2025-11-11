@@ -5,9 +5,26 @@ namespace MVPS\Lumis\Services;
 use pdeans\Miva\Api\Client as MivaApiClient;
 
 /**
- * @see \pdeans\Miva\Api\Client
- * @mixin \pdeans\Miva\Api\Client
- *
+ * @method \pdeans\Miva\Api\Client func(string $name)
+ * @method \pdeans\Miva\Api\Client add(
+ *     \pdeans\Miva\Api\Builders\FunctionBuilder $function = null
+ * )
+ * @method \pdeans\Miva\Api\Client addHeader(string $headerName, string $headerValue)
+ * @method \pdeans\Miva\Api\Client addHeaders(array $headers)
+ * @method array getFunctionList()
+ * @method array getHeaders()
+ * @method \pdeans\Http\Request|null getPreviousRequest()
+ * @method \pdeans\Http\Response|null getPreviousResponse()
+ * @method array getOptions()
+ * @method \pdeans\Miva\Api\Request getRequest()
+ * @method string getRequestBody(
+ *     int $encodeOpts = JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT,
+ *     int $depth = 512
+ * )
+ * @method string getUrl()
+ * @method string|\pdeans\Miva\Api\Response send(bool $rawResponse = false)
+ * @method \pdeans\Miva\Api\Client setOptions(array $options)
+ * @method \pdeans\Miva\Api\Client setUrl(string $url)
  * @method \pdeans\Miva\Api\Client count(int $count)
  * @method \pdeans\Miva\Api\Client filter(string $filterName, mixed $filterValue)
  * @method \pdeans\Miva\Api\Client filters(array $filters)
@@ -20,6 +37,9 @@ use pdeans\Miva\Api\Client as MivaApiClient;
  * @method \pdeans\Miva\Api\Client show(string $showValue)
  * @method \pdeans\Miva\Api\Client sort(string $sortColumn)
  * @method \pdeans\Miva\Api\Client sortDesc(string $sortColumn)
+ *
+ * @see \pdeans\Miva\Api\Client
+ * @mixin \pdeans\Miva\Api\Client
  */
 class ApiClientService
 {
