@@ -50,7 +50,11 @@
 				"MVPS\\Lumis\\Providers\\LumisServiceProvider",
 				"MVPS\\Lumis\\Providers\\MivaApiServiceProvider",
 				"MVPS\\Lumis\\Providers\\StoreServiceProvider"
-			]
+			],
+			"aliases": {
+				"MivaApi": "MVPS\\Lumis\\Facades\\MivaApi",
+				"Store": "MVPS\\Lumis\\Facades\\Store"
+			}
 		}
 	},
 	"config": {
