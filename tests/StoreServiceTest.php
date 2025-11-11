@@ -5,10 +5,10 @@ use MVPS\Lumis\Services\StoreService;
 it('resolves StoreService and normalizes paths', function () {
 	$store = resolve(StoreService::class);
 
-	expect($store->code)->toBe('s01');
-	expect($store->url)->toBe('https://default.test');
-	expect($store->rootPath)->toBe('/mm5/');
-	expect($store->graphicsPath)->toBe('graphics/00000001/');
+	expect($store->code())->toBe('s01');
+	expect($store->url())->toBe('https://default.test');
+	expect($store->rootPath())->toBe('/mm5/');
+	expect($store->graphicsPath())->toBe('graphics/00000001/');
 });
 
 it('builds graphics, json, and root URLs', function () {
