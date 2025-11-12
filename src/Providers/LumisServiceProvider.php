@@ -3,6 +3,7 @@
 namespace MVPS\Lumis\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use MVPS\Lumis\Console\InstallCommand;
 
 class LumisServiceProvider extends ServiceProvider
 {
@@ -22,6 +23,10 @@ class LumisServiceProvider extends ServiceProvider
 		$this->publishes([
 			$this->configPath('miva.php') => config_path('miva.php'),
 		], 'lumis-config');
+
+		if ($this->app->runningInConsole()) {
+			$this->commands([InstallCommand::class]);
+		}
 	}
 
 	/**

@@ -19,9 +19,23 @@ composer require mvps/laravel-lumis
 
 The service providers and facades will be automatically registered through Laravel's package auto-discovery.
 
+### Optional: Installer
+
+To simplify setup, you can run the Lumis installer command:
+
+```bash
+php artisan lumis:install
+```
+
+This will:
+
+- Publish the configuration file at `config/miva.php`
+- Print environment variable examples
+- List next steps
+
 ## Configuration
 
-Publish the configuration file:
+You can publish the configuration file manually using:
 
 ```bash
 php artisan vendor:publish --tag=lumis-config
@@ -32,6 +46,14 @@ This will create a configuration file at:
 ```
 config/miva.php
 ```
+
+**Note:** The configuration file is also published automatically when you run the install command:
+
+```bash
+php artisan lumis:install
+```
+
+You may skip the manual publishing step if you use the install command.
 
 ### Example Configuration
 
@@ -181,7 +203,7 @@ Below mirrors the `connections` structure in `config/miva.php`.
 **Tip:** After editing `.env`, run:
 
 ```bash
-php artisan config:clear && php artisan config:cache
+php artisan config:cache
 ```
 
 ## Facades
