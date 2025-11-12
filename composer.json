@@ -21,7 +21,7 @@
 		}
 	],
 	"require": {
-		"php": "^8.2",
+		"php": "^8.3",
 		"illuminate/support": "^10.0",
 		"pdeans/miva-api": "^2.1.1"
 	},
