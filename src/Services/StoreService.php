@@ -47,7 +47,7 @@ final readonly class StoreService
 	public function __construct(
 		string $code,
 		string $url,
-		string $graphicsPath = 'graphics/',
+		string $graphicsPath = 'graphics/00000001/',
 		string $rootPath = '/mm5/',
 		array $auth = []
 	) {

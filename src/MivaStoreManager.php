@@ -58,7 +58,7 @@ class MivaStoreManager extends Manager
 		return new StoreService(
 			code: (string) ($config['code'] ?? ''),
 			url: (string) ($config['url'] ?? ''),
-			graphicsPath: (string) ($config['graphics_path'] ?? 'graphics/'),
+			graphicsPath: (string) ($config['graphics_path'] ?? 'graphics/00000001/'),
 			rootPath: (string) ($config['root_path'] ?? '/mm5/'),
 			auth: $auth
 		);

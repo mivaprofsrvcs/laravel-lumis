@@ -49,7 +49,7 @@ class MivaApiManager extends Manager
 		$storeService = new StoreService(
 			code: (string) ($store['code'] ?? ''),
 			url: (string) ($store['url'] ?? ''),
-			graphicsPath: (string) ($store['graphics_path'] ?? 'graphics/'),
+			graphicsPath: (string) ($store['graphics_path'] ?? 'graphics/00000001/'),
 			rootPath: (string) ($store['root_path'] ?? '/mm5/'),
 			auth: (array) ($store['auth'] ?? []),
 		);
