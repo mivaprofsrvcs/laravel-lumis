@@ -6,7 +6,7 @@ use MVPS\Lumis\Facades\Store;
 it('resolves MivaApi facade and proxies builder methods', function () {
 	MivaApi::func('ProductList_Load_Query')
 		->odc(['url'])
-		->filter('code', 'ABC')
+		->count(5)
 		->add();
 
 	$body = MivaApi::getRequestBody(JSON_THROW_ON_ERROR);
