@@ -15,7 +15,8 @@ class InstallCommand extends Command
 	 */
 	protected $signature = 'lumis:install
 		{--force : Overwrite existing files}
-		{--no-env : Do not print the .env example block}';
+		{--no-env : Do not print the .env example block}
+		{--no-next : Do not print the Next Steps section}';
 
 	/**
 	 * {@inheritdoc}
@@ -35,7 +36,9 @@ class InstallCommand extends Command
 			$this->printEnvExample();
 		}
 
-		$this->printNextSteps();
+		if (! $this->option('no-next')) {
+			$this->printNextSteps();
+		}
 
 		return self::SUCCESS;
 	}

@@ -26,6 +26,18 @@ it('supports the --no-env option', function (): void {
 	$this->artisan('lumis:install --no-env')->assertExitCode(0);
 });
 
+it('prints next steps by default', function (): void {
+	$this->artisan('lumis:install --no-env')
+		->expectsOutputToContain('Next steps')
+		->assertExitCode(0);
+});
+
+it('supports the --no-next option', function (): void {
+	$this->artisan('lumis:install --no-env --no-next')
+		->doesntExpectOutputToContain('Next steps')
+		->assertExitCode(0);
+});
+
 it('publishes the config file successfully', function (): void {
 	$this->artisan('lumis:install --no-env')->assertExitCode(0);
 
