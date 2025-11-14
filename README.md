@@ -6,8 +6,8 @@
 	<a href="https://packagist.org/packages/mvps/laravel-lumis">
 		<img src="https://img.shields.io/packagist/v/mvps/laravel-lumis.svg" alt="Latest Version">
 	</a>
-	<a href="https://github.com/mivaprofsrvcs/laravel-lumis/actions">
-		<img src="https://github.com/mivaprofsrvcs/laravel-lumis/workflows/tests/badge.svg" alt="Tests">
+	<a href="https://github.com/mivaprofsrvcs/laravel-lumis/actions/workflows/tests.yml">
+		<img src="https://github.com/mivaprofsrvcs/laravel-lumis/actions/workflows/tests.yml/badge.svg" alt="Tests">
 	</a>
 	<a href="https://packagist.org/packages/mvps/laravel-lumis">
 		<img src="https://img.shields.io/packagist/dt/mvps/laravel-lumis.svg" alt="Total Downloads">
