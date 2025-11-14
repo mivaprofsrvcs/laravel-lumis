@@ -2,7 +2,7 @@
 	"name": "mvps/laravel-lumis",
 	"description": "Laravel package providing MVPS Lumis common functionality for integration and task-based services.",
 	"type": "library",
-	"license": "proprietary",
+	"license": "MIT",
 	"keywords": [
 		"Lumis",
 		"Laravel-Lumis",
