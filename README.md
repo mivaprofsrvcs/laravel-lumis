@@ -17,7 +17,7 @@
 	</a>
 </p>
 
-# Lumis for Laravel
+# Introduction
 
 The **Lumis for Laravel** package bridges the power of the **Miva JSON API** with the expressive structure of **Laravel**, giving you a clean, service-driven foundation for building reliable integrations.
 
