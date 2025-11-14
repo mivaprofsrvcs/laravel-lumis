@@ -3,14 +3,14 @@
 </p>
 
 <p align="center">
-	<a href="https://packagist.org/packages/mvps/lumis">
-		<img src="https://img.shields.io/packagist/v/mvps/lumis.svg" alt="Latest Version">
+	<a href="https://packagist.org/packages/mvps/laravel-lumis">
+		<img src="https://img.shields.io/packagist/v/mvps/laravel-lumis.svg" alt="Latest Version">
 	</a>
 	<a href="https://github.com/mivaprofsrvcs/laravel-lumis/actions">
 		<img src="https://github.com/mivaprofsrvcs/laravel-lumis/workflows/tests/badge.svg" alt="Tests">
 	</a>
-	<a href="https://packagist.org/packages/mvps/lumis">
-		<img src="https://img.shields.io/packagist/dt/mvps/lumis.svg" alt="Total Downloads">
+	<a href="https://packagist.org/packages/mvps/laravel-lumis">
+		<img src="https://img.shields.io/packagist/dt/mvps/laravel-lumis.svg" alt="Total Downloads">
 	</a>
 	<a href="LICENSE.md">
 		<img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License">
