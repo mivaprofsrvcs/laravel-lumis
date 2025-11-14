@@ -44,7 +44,7 @@
 /examples           export-ignore
 /styleci.yml        export-ignore
 /composer.lock      export-ignore
-/extra/             export-ignore
+/extra              export-ignore
 
 build/** linguist-generated
 dist/**  linguist-generated
