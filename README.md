@@ -1,20 +1,10 @@
-<p align="center">
-	<img src="/extra/logo.png" alt="MVPS Lumis Logo" width="398" height="105">
-</p>
+<p align="center"><img src="/extra/logo.png" alt="MVPS Lumis Logo" width="398" height="105"></p>
 
 <p align="center">
-	<a href="https://packagist.org/packages/mvps/laravel-lumis">
-		<img src="https://img.shields.io/packagist/v/mvps/laravel-lumis.svg" alt="Latest Version" style="vertical-align: middle;">
-	</a>
-	<a href="https://github.com/mivaprofsrvcs/laravel-lumis/actions/workflows/tests.yml">
-		<img src="https://github.com/mivaprofsrvcs/laravel-lumis/actions/workflows/tests.yml/badge.svg" alt="Tests" style="vertical-align: middle;">
-	</a>
-	<a href="https://packagist.org/packages/mvps/laravel-lumis">
-		<img src="https://img.shields.io/packagist/dt/mvps/laravel-lumis.svg" alt="Total Downloads" style="vertical-align: middle;">
-	</a>
-	<a href="LICENSE.md">
-		<img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License" style="vertical-align: middle;">
-	</a>
+<a href="https://packagist.org/packages/mvps/laravel-lumis"><img src="https://img.shields.io/packagist/v/mvps/laravel-lumis" alt="Latest Stable Version"></a>
+<a href="https://github.com/mivaprofsrvcs/laravel-lumis/actions/workflows/tests.yml"><img src="https://github.com/mivaprofsrvcs/laravel-lumis/actions/workflows/tests.yml/badge.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/mvps/laravel-lumis"><img src="https://img.shields.io/packagist/dt/mvps/laravel-lumis" alt="Total Downloads"></a>
+<a href="LICENSE.md"><img src="https://img.shields.io/packagist/l/mvps/laravel-lumis" alt="License"></a>
 </p>
 
 # Introduction
