@@ -3,18 +3,12 @@
 </p>
 
 <p align="center">
-	<a href="https://packagist.org/packages/mvps/laravel-lumis">
-		<img src="https://img.shields.io/packagist/v/mvps/laravel-lumis.svg" alt="Latest Version">
-	</a>
-	<a href="https://github.com/mivaprofsrvcs/laravel-lumis/actions/workflows/tests.yml">
-		<img src="https://github.com/mivaprofsrvcs/laravel-lumis/actions/workflows/tests.yml/badge.svg" alt="Tests">
-	</a>
-	<a href="https://packagist.org/packages/mvps/laravel-lumis">
-		<img src="https://img.shields.io/packagist/dt/mvps/laravel-lumis.svg" alt="Total Downloads">
-	</a>
-	<a href="LICENSE.md">
-		<img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License">
-	</a>
+
+[![Latest Version](https://img.shields.io/packagist/v/mvps/laravel-lumis.svg)](https://packagist.org/packages/mvps/laravel-lumis)
+[![Tests](https://github.com/mivaprofsrvcs/laravel-lumis/actions/workflows/tests.yml/badge.svg)](https://github.com/mivaprofsrvcs/laravel-lumis/actions/workflows/tests.yml)
+[![Total Downloads](https://img.shields.io/packagist/dt/mvps/laravel-lumis.svg)](https://packagist.org/packages/mvps/laravel-lumis)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
+
 </p>
 
 # Introduction
