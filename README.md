@@ -22,7 +22,6 @@ See the [full documentation](https://proservices.mivamerchant.net/lumis/docs/) f
 ## Contributing
 
 Thank you for considering contributing to Lumis! Please see the [contributing guide](https://proservices.mivamerchant.net/lumis/docs/contributing/) for details.
-Please review the contribution guide:
 
 ## Code of Conduct
 
