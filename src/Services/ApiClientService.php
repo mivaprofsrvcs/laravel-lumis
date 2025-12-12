@@ -43,174 +43,174 @@ use pdeans\Miva\Api\Client as MivaApiClient;
  */
 class ApiClientService
 {
-	/**
-	 * The Miva API client.
-	 *
-	 * @var \pdeans\Miva\Api\Client
-	 */
-	protected MivaApiClient $client;
+    /**
+     * The Miva API client.
+     *
+     * @var \pdeans\Miva\Api\Client
+     */
+    protected MivaApiClient $client;
 
-	/**
-	 * Create a new Miva API client service.
-	 */
-	public function __construct(MivaApiClient $apiClient)
-	{
-		$this->client = $apiClient;
-	}
+    /**
+     * Create a new Miva API client service.
+     */
+    public function __construct(MivaApiClient $apiClient)
+    {
+        $this->client = $apiClient;
+    }
 
-	/**
-	 * Get the Miva Api client instance.
-	 */
-	public function client(): MivaApiClient
-	{
-		return $this->client;
-	}
+    /**
+     * Get the Miva Api client instance.
+     */
+    public function client(): MivaApiClient
+    {
+        return $this->client;
+    }
 
-	/**
-	 * Build a list-load query and enqueue it on the client.
-	 *
-	 * This method prepares a Miva list-load function by setting the provided
-	 * sort, count, offset, and filter options before adding it to the
-	 * client's function queue.
-	 *
-	 * @param  string  $function  The Miva JSON API function name.
-	 * @param  array<string>  $onDemandColumns  List of on-demand columns to include.
-	 * @param  ?string  $sort  Optional column name to sort results by.
-	 * @param  ?int  $count  Optional number of records to return.
-	 * @param  ?int  $offset  Optional number of records to skip.
-	 * @param  array<string,mixed>|array<int,array{name:string,value:mixed}>|null  $filters
-	 *         Filters to apply. Supports:
-	 *         - Assoc map: ['ondemandcolumns' => [...], 'search' => [SearchCond, ...]]
-	 *         - List of pairs: [['name' => '...', 'value' => mixed], ...]
-	 *         - Single-key maps: [['search' => mixed], ['ondemandcolumns' => mixed], ...]
-	 * @return \pdeans\Miva\Api\Client
-	 */
-	public function listLoadQuery(
-		string $function,
-		array $onDemandColumns = [],
-		?string $sort = null,
-		?int $count = null,
-		?int $offset = null,
-		?array $filters = null
-	): MivaApiClient {
-		$this->client->func($function);
+    /**
+     * Build a list-load query and enqueue it on the client.
+     *
+     * This method prepares a Miva list-load function by setting the provided
+     * sort, count, offset, and filter options before adding it to the
+     * client's function queue.
+     *
+     * @param  string  $function  The Miva JSON API function name.
+     * @param  array<string>  $onDemandColumns  List of on-demand columns to include.
+     * @param  ?string  $sort  Optional column name to sort results by.
+     * @param  ?int  $count  Optional number of records to return.
+     * @param  ?int  $offset  Optional number of records to skip.
+     * @param  array<string,mixed>|array<int,array{name:string,value:mixed}>|null  $filters
+     *         Filters to apply. Supports:
+     *         - Assoc map: ['ondemandcolumns' => [...], 'search' => [SearchCond, ...]]
+     *         - List of pairs: [['name' => '...', 'value' => mixed], ...]
+     *         - Single-key maps: [['search' => mixed], ['ondemandcolumns' => mixed], ...]
+     * @return \pdeans\Miva\Api\Client
+     */
+    public function listLoadQuery(
+        string $function,
+        array $onDemandColumns = [],
+        ?string $sort = null,
+        ?int $count = null,
+        ?int $offset = null,
+        ?array $filters = null
+    ): MivaApiClient {
+        $this->client->func($function);
 
-		if (! empty($onDemandColumns)) {
-			$this->client->odc($onDemandColumns);
-		}
+        if (! empty($onDemandColumns)) {
+            $this->client->odc($onDemandColumns);
+        }
 
-		if ((string) $sort !== '') {
-			$this->client->sort($sort);
-		}
+        if ((string) $sort !== '') {
+            $this->client->sort($sort);
+        }
 
-		if ($count !== null) {
-			$this->client->count($count);
-		}
+        if ($count !== null) {
+            $this->client->count($count);
+        }
 
-		if ($offset !== null) {
-			$this->client->offset($offset);
-		}
+        if ($offset !== null) {
+            $this->client->offset($offset);
+        }
 
-		if (! empty($filters)) {
-			foreach ($this->normalizeFilters($filters) as $filter) {
-				$this->client->filter($filter['name'], $filter['value']);
-			}
-		}
+        if (! empty($filters)) {
+            foreach ($this->normalizeFilters($filters) as $filter) {
+                $this->client->filter($filter['name'], $filter['value']);
+            }
+        }
 
-		return $this->client->add();
-	}
+        return $this->client->add();
+    }
 
-	/**
-	 * Normalize $filters to [['name' => string, 'value' => mixed], ...].
-	 *
-	 * Accepts one of:
-	 *  A) assoc map:
-	 *     ['ondemandcolumns' => [...], 'search' => [SearchCond|Subwhere, ...], ...]
-	 *  B) list of pairs:
-	 *     [['name' => '...', 'value' => mixed], ...]
-	 *  C) list of single-key maps:
-	 *     [['search' => mixed], ['ondemandcolumns' => mixed], ...]
-	 *
-	 * Notes:
-	 * - For AND logic: pass multiple top-level 'search' entries (B/C), each
-	 *   with a single SearchCond in 'value'.
-	 * - For OR logic: pass one 'search' entry with multiple SearchCond items
-	 *   in 'value'.
-	 * - For parentheses: include a SearchCond with operator 'SUBWHERE' and
-	 *   field 'search_OR' or 'search_AND'.
-	 *
-	 * @param  array<string,mixed>|array<int,array<string,mixed>> $filters
-	 * @return array<int,array{name:string,value:mixed}>
-	 */
-	private function normalizeFilters(array $filters): array
-	{
-		$normalized = [];
+    /**
+     * Normalize $filters to [['name' => string, 'value' => mixed], ...].
+     *
+     * Accepts one of:
+     *  A) assoc map:
+     *     ['ondemandcolumns' => [...], 'search' => [SearchCond|Subwhere, ...], ...]
+     *  B) list of pairs:
+     *     [['name' => '...', 'value' => mixed], ...]
+     *  C) list of single-key maps:
+     *     [['search' => mixed], ['ondemandcolumns' => mixed], ...]
+     *
+     * Notes:
+     * - For AND logic: pass multiple top-level 'search' entries (B/C), each
+     *   with a single SearchCond in 'value'.
+     * - For OR logic: pass one 'search' entry with multiple SearchCond items
+     *   in 'value'.
+     * - For parentheses: include a SearchCond with operator 'SUBWHERE' and
+     *   field 'search_OR' or 'search_AND'.
+     *
+     * @param  array<string,mixed>|array<int,array<string,mixed>> $filters
+     * @return array<int,array{name:string,value:mixed}>
+     */
+    private function normalizeFilters(array $filters): array
+    {
+        $normalized = [];
 
-		$addFilter = static function (string $name, mixed $value) use (&$normalized): void {
-			$name = trim($name);
+        $addFilter = static function (string $name, mixed $value) use (&$normalized): void {
+            $name = trim($name);
 
-			if ($name !== '') {
-				$normalized[] = ['name' => $name, 'value' => $value];
-			}
-		};
+            if ($name !== '') {
+                $normalized[] = ['name' => $name, 'value' => $value];
+            }
+        };
 
-		$isAssoc = array_keys($filters) !== range(0, count($filters) - 1);
+        $isAssoc = array_keys($filters) !== range(0, count($filters) - 1);
 
-		if ($isAssoc) {
-			// Assoc map
-			foreach ($filters as $name => $value) {
-				$addFilter((string) $name, $value);
-			}
+        if ($isAssoc) {
+            // Assoc map
+            foreach ($filters as $name => $value) {
+                $addFilter((string) $name, $value);
+            }
 
-			return $normalized;
-		}
+            return $normalized;
+        }
 
-		foreach ($filters as $item) {
-			if (! is_array($item) || $item === []) {
-				continue;
-			}
+        foreach ($filters as $item) {
+            if (! is_array($item) || $item === []) {
+                continue;
+            }
 
-			// Explicit {name,value}
-			if (array_key_exists('name', $item) && array_key_exists('value', $item)) {
-				$addFilter((string) $item['name'], $item['value']);
+            // Explicit {name,value}
+            if (array_key_exists('name', $item) && array_key_exists('value', $item)) {
+                $addFilter((string) $item['name'], $item['value']);
 
-				continue;
-			}
+                continue;
+            }
 
-			// Single-key map
-			if (count($item) === 1) {
-				$addFilter((string) array_key_first($item), current($item));
-			}
-		}
+            // Single-key map
+            if (count($item) === 1) {
+                $addFilter((string) array_key_first($item), current($item));
+            }
+        }
 
-		return $normalized;
-	}
+        return $normalized;
+    }
 
-	/**
-	 * Send the request and optionally target a specific function's response.
-	 */
-	public function sendRequest(?string $functionName = null): ?array
-	{
-		$response = $this->client->send();
+    /**
+     * Send the request and optionally target a specific function's response.
+     */
+    public function sendRequest(?string $functionName = null): ?array
+    {
+        $response = $this->client->send();
 
-		return $response?->getResponse($functionName);
-	}
+        return $response?->getResponse($functionName);
+    }
 
-	/**
-	 * Set the Miva Api client instance.
-	 */
-	public function setClient(MivaApiClient $apiClient): static
-	{
-		$this->client = $apiClient;
+    /**
+     * Set the Miva Api client instance.
+     */
+    public function setClient(MivaApiClient $apiClient): static
+    {
+        $this->client = $apiClient;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Dynamically handle calls into the client instance.
-	 */
-	public function __call(string $method, array $arguments): mixed
-	{
-		return $this->client->{$method}(...$arguments);
-	}
+    /**
+     * Dynamically handle calls into the client instance.
+     */
+    public function __call(string $method, array $arguments): mixed
+    {
+        return $this->client->{$method}(...$arguments);
+    }
 }

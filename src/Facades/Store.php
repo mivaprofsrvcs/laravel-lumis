@@ -25,11 +25,11 @@ use MVPS\Lumis\MivaStoreManager;
  */
 class Store extends Facade
 {
-	/**
-	 * @inheritdoc
-	 */
-	protected static function getFacadeAccessor(): string
-	{
-		return MivaStoreManager::class;
-	}
+    /**
+     * @inheritdoc
+     */
+    protected static function getFacadeAccessor(): string
+    {
+        return MivaStoreManager::class;
+    }
 }

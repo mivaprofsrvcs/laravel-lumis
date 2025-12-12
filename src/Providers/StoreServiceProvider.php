@@ -9,30 +9,30 @@ use MVPS\Lumis\Services\StoreService;
 
 class StoreServiceProvider extends ServiceProvider implements DeferrableProvider
 {
-	/**
-	 * @inheritdoc
-	 */
-	public function register(): void
-	{
-		$this->app->singleton(
-			MivaStoreManager::class,
-			fn ($app) => new \MVPS\Lumis\MivaStoreManager($app)
-		);
+    /**
+     * @inheritdoc
+     */
+    public function register(): void
+    {
+        $this->app->singleton(
+            MivaStoreManager::class,
+            fn ($app) => new \MVPS\Lumis\MivaStoreManager($app)
+        );
 
-		$this->app->singleton(
-			StoreService::class,
-			fn ($app) => $app->make(MivaStoreManager::class)->connection()
-		);
-	}
+        $this->app->singleton(
+            StoreService::class,
+            fn ($app) => $app->make(MivaStoreManager::class)->connection()
+        );
+    }
 
-	/**
-	 * @inheritdoc
-	 */
-	public function provides(): array
-	{
-		return [
-			MivaStoreManager::class,
-			StoreService::class,
-		];
-	}
+    /**
+     * @inheritdoc
+     */
+    public function provides(): array
+    {
+        return [
+            MivaStoreManager::class,
+            StoreService::class,
+        ];
+    }
 }

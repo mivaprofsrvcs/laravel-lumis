@@ -60,8 +60,8 @@ use MVPS\Lumis\MivaApiManager;
  */
 class MivaApi extends Facade
 {
-	protected static function getFacadeAccessor(): string
-	{
-		return MivaApiManager::class;
-	}
+    protected static function getFacadeAccessor(): string
+    {
+        return MivaApiManager::class;
+    }
 }

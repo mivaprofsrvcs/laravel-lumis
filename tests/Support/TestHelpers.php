@@ -7,9 +7,9 @@ use MVPS\Lumis\Services\ApiClientService;
  */
 function decodeRequest(ApiClientService $service): array
 {
-	$body = $service->getRequestBody(JSON_THROW_ON_ERROR);
+    $body = $service->getRequestBody(JSON_THROW_ON_ERROR);
 
-	return json_decode($body, true, 512, JSON_THROW_ON_ERROR);
+    return json_decode($body, true, 512, JSON_THROW_ON_ERROR);
 }
 
 /**
@@ -17,13 +17,13 @@ function decodeRequest(ApiClientService $service): array
  */
 function findFilter(array $request, string $name): ?array
 {
-	$filters = $request['Filter'] ?? [];
+    $filters = $request['Filter'] ?? [];
 
-	foreach ($filters as $filter) {
-		if (($filter['name'] ?? null) === $name) {
-			return $filter;
-		}
-	}
+    foreach ($filters as $filter) {
+        if (($filter['name'] ?? null) === $name) {
+            return $filter;
+        }
+    }
 
-	return null;
+    return null;
 }

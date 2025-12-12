@@ -10,35 +10,35 @@ use pdeans\Miva\Api\Client as MivaApiClient;
 
 class MivaApiServiceProvider extends ServiceProvider implements DeferrableProvider
 {
-	/**
-	 * @inheritdoc
-	 */
-	public function register(): void
-	{
-		$this->app->singleton(
-			MivaApiManager::class,
-			fn ($app) => new MivaApiManager($app)
-		);
+    /**
+     * @inheritdoc
+     */
+    public function register(): void
+    {
+        $this->app->singleton(
+            MivaApiManager::class,
+            fn ($app) => new MivaApiManager($app)
+        );
 
-		$this->app->singleton(
-			ApiClientService::class,
-			fn ($app) => $app->make(MivaApiManager::class)->connection()
-		);
+        $this->app->singleton(
+            ApiClientService::class,
+            fn ($app) => $app->make(MivaApiManager::class)->connection()
+        );
 
-		$this->app->bind(
-			MivaApiClient::class,
-			fn ($app) => $app->make(ApiClientService::class)->client()
-		);
-	}
+        $this->app->bind(
+            MivaApiClient::class,
+            fn ($app) => $app->make(ApiClientService::class)->client()
+        );
+    }
 
-	/**
-	 * @inheritdoc
-	 */
-	public function provides(): array
-	{
-		return [
-			MivaApiManager::class,
-			ApiClientService::class,
-		];
-	}
+    /**
+     * @inheritdoc
+     */
+    public function provides(): array
+    {
+        return [
+            MivaApiManager::class,
+            ApiClientService::class,
+        ];
+    }
 }
