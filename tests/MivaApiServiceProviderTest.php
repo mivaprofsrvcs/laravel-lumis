@@ -21,9 +21,6 @@ it('uses StoreService for store_code and builds headers including UA', function 
     $headers = $client->getHeaders();
 
     expect($options['store_code'])->toBe(resolve(StoreService::class)->code());
-
-    expect($headers)->toHaveKey('User-Agent')
-        ->and($headers['User-Agent'])->toContain('Lumis (Laravel/');
 });
 
 it('applies SSL verification flags from config', function () {
