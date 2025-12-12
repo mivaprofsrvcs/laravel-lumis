@@ -23,7 +23,7 @@
 	"require": {
 		"php": "^8.3",
 		"illuminate/support": "^10.0|^11.0|^12.0",
-		"pdeans/miva-api": "^2.1.1"
+		"pdeans/miva-api": "^3.0"
 	},
 	"require-dev": {
 		"laravel/pint": "^1.26",
