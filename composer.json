@@ -26,10 +26,13 @@
 		"pdeans/miva-api": "^2.1.1"
 	},
 	"require-dev": {
-		"nunomaduro/collision": "^7.12",
-		"orchestra/testbench": "^8.18",
-		"pestphp/pest": "^2.36",
-		"pestphp/pest-plugin-laravel": "^2.2"
+		"laravel/pint": "^1.26",
+		"nunomaduro/collision": "^8.8",
+		"orchestra/testbench": "^10.8",
+		"pestphp/pest": "^4.1",
+		"pestphp/pest-plugin-laravel": "^4.0",
+		"phpstan/phpstan": "^2.1",
+		"symfony/var-dumper": "^7.4"
 	},
 	"autoload": {
 		"psr-4": {
