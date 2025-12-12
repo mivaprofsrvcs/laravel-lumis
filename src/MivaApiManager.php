@@ -73,10 +73,7 @@ class MivaApiManager extends Manager
 			'access_token' => (string) ($api['token'] ?? ''),
 			'private_key' => (string) ($api['key'] ?? ''),
 			'http_headers' => $headers,
-			'http_client' => [
-				CURLOPT_SSL_VERIFYPEER => $verifySsl ? 1 : 0,
-				CURLOPT_SSL_VERIFYHOST => $verifySsl ? 2 : 0,
-			],
+			'http_client' => ['verify' => $verifySsl],
 		]);
 
 		return new ApiClientService($client);
