@@ -104,7 +104,7 @@ class InstallCommand extends Command
         $this->components->bulletList([
             'Review and customize config/miva.php',
             'Add your Miva credentials to the .env file',
-            'Define multiple connections (config/miva.php → miva.connections)',
+            'Define multiple connections (config/miva.php → connections)',
             'Set the default connection via MM_CONNECTION',
             'Run: php artisan config:cache',
         ]);
