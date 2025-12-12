@@ -33,7 +33,6 @@ it('applies SSL verification flags from config', function () {
     $apiClient = resolve(ApiClientService::class);
 
     expect($apiClient->client()->getOptions()['http_client'] ?? [])->toMatchArray([
-        CURLOPT_SSL_VERIFYPEER => 1,
-        CURLOPT_SSL_VERIFYHOST => 2,
+        'verify' => true,
     ]);
 });

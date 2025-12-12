@@ -32,6 +32,20 @@ return [
                 'token' => env('MM_API_TOKEN'),
                 'url' => env('MM_API_URL'),
                 'verify_ssl' => (bool) env('MM_API_VERIFY_SSL', false),
+                // Optional API client settings:
+                // 'hmac' => 'sha256',
+                // 'timeout' => 30,
+                // 'binary_encoding' => 'base64',
+                // 'range' => '1-100',
+                // 'ssh_auth' => [
+                //     'username' => env('MM_API_SSH_USERNAME'),
+                //     'private_key' => env('MM_API_SSH_PRIVATE_KEY'),
+                //     'algorithm' => 'sha256',
+                // ],
+                // 'http_client' => [
+                //     // List of Guzzle options:
+                //     // https://docs.guzzlephp.org/en/stable/request-options.html
+                // ],
             ],
             'store' => [
                 'auth' => [

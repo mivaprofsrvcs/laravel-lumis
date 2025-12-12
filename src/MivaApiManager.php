@@ -66,14 +66,44 @@ class MivaApiManager extends Manager
 
         $verifySsl = (bool) ($api['verify_ssl'] ?? false);
 
-        $client = new MivaApiClient([
+        $clientOptions = [
             'url' => (string) ($api['url'] ?? ''),
             'store_code' => $storeService->code(),
             'access_token' => (string) ($api['token'] ?? ''),
             'private_key' => (string) ($api['key'] ?? ''),
             'http_headers' => $headers,
-            'http_client' => ['verify' => $verifySsl],
-        ]);
+            'http_client' => $api['http_client'] ?? ['verify' => $verifySsl],
+        ];
+
+        if (isset($api['hmac'])) {
+            $clientOptions['hmac'] = (string) $api['hmac'];
+        }
+
+        if (isset($api['timeout'])) {
+            $clientOptions['timeout'] = (int) $api['timeout'];
+        }
+
+        if (isset($api['binary_encoding'])) {
+            $clientOptions['binary_encoding'] = (string) $api['binary_encoding'];
+        }
+
+        if (isset($api['range'])) {
+            $clientOptions['range'] = (string) $api['range'];
+        }
+
+        if (! empty($api['ssh_auth']) && is_array($api['ssh_auth'])) {
+            $sshAuth = $api['ssh_auth'];
+
+            if (! empty($sshAuth['username']) && ! empty($sshAuth['private_key'])) {
+                $clientOptions['ssh_auth'] = [
+                    'username' => (string) $sshAuth['username'],
+                    'private_key' => (string) $sshAuth['private_key'],
+                    'algorithm' => (string) ($sshAuth['algorithm'] ?? 'sha256'),
+                ];
+            }
+        }
+
+        $client = new MivaApiClient($clientOptions);
 
         return new ApiClientService($client);
     }
