@@ -56,7 +56,6 @@ class MivaApiManager extends Manager
 
         $headers = [
             'Cache-Control' => 'no-cache',
-            'User-Agent' => sprintf('Lumis (Laravel/%s)', $this->container->version() ?: 'unknown'),
         ];
 
         $authHeader = $storeService->authHeader();
