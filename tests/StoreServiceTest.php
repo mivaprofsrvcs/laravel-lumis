@@ -37,3 +37,17 @@ it('includes basic auth header when configured', function () {
     expect($authHeader)->toHaveKey('Authorization');
     expect($authHeader['Authorization'] ?? null)->toStartWith('Basic ');
 });
+
+it('normalizes store paths and urls when provided without slashes', function () {
+    $store = new StoreService(
+        code: 's99',
+        url: 'https://demo.test/',
+        graphicsPath: 'graphics/00000099',
+        rootPath: 'mm5',
+    );
+
+    expect($store->rootPath())->toBe('/mm5/')
+        ->and($store->graphicsPath())->toBe('graphics/00000099/')
+        ->and($store->rootUrl())->toBe('https://demo.test/mm5/')
+        ->and($store->graphicsUrl())->toBe('https://demo.test/mm5/graphics/00000099/');
+});

@@ -1,8 +1,9 @@
 <?php
 
+use InvalidArgumentException;
+use MVPS\Lumis\Facades\Store;
 use MVPS\Lumis\MivaStoreManager;
 use MVPS\Lumis\Services\StoreService;
-use MVPS\Lumis\Facades\Store;
 
 it('resolves default store via manager', function () {
     $storeManager = resolve(MivaStoreManager::class);
@@ -27,4 +28,11 @@ it('Store facade proxies to default connection', function () {
 
 it('Store facade supports connection switching', function () {
     expect(Store::connection('store02')->url())->toBe('https://store02.test');
+});
+
+it('throws exception when store connection is not configured', function () {
+    $manager = resolve(MivaStoreManager::class);
+
+    expect(fn () => $manager->connection('unknown'))
+        ->toThrow(InvalidArgumentException::class, 'Miva connection [unknown] is not configured.');
 });

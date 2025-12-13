@@ -32,6 +32,15 @@ it('supports the --no-env option', function (): void {
     $this->artisan('lumis:install --no-env')->assertExitCode(0);
 });
 
+it('prints env example by default', function (): void {
+    /** @var \Tests\TestCase $this */
+    $this->artisan('lumis:install --no-next')
+        ->expectsOutputToContain('Add the following to your .env')
+        ->expectsOutputToContain('MM_STORE_URL=https://example.test')
+        ->expectsOutputToContain('MM_API_URL="${MM_STORE_URL}${MM_STORE_ROOT_PATH}json.mvc"')
+        ->assertExitCode(0);
+});
+
 it('prints next steps by default', function (): void {
     /** @var \Tests\TestCase $this */
     $this->artisan('lumis:install --no-env')

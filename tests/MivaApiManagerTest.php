@@ -1,6 +1,7 @@
 <?php
 
 use GuzzleHttp\Client;
+use InvalidArgumentException;
 use MVPS\Lumis\Facades\MivaApi;
 use MVPS\Lumis\MivaApiManager;
 use MVPS\Lumis\Services\ApiClientService;
@@ -41,6 +42,13 @@ it('facade supports connection switching', function () {
 
     expect($req2['Store_Code'] ?? null)->toBe('s02');
     expect($req2['Function'] ?? null)->toBe('OrderList_Load_Query');
+});
+
+it('throws exception when connection is not configured', function () {
+    $manager = resolve(MivaApiManager::class);
+
+    expect(fn () => $manager->connection('unknown'))
+        ->toThrow(InvalidArgumentException::class, 'Miva store connection [unknown] is not configured.');
 });
 
 it('passes optional api client options through to the Miva client', function () {
