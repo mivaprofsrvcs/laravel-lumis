@@ -32,9 +32,12 @@ it('allows swapping the client and still supports sendRequest', function () {
             // Do not call parent constructor.
         }
 
-        public function send(bool $rawResponse = false): string|MivaApiResponse
+        public function send(bool $rawResponse = false): MivaApiResponse
         {
-            return new class (['ok' => true]) extends \pdeans\Miva\Api\Response {
+            return new class (['ok' => true]) extends MivaApiResponse {
+                /**
+                 * @param  array<string, mixed>  $payload
+                 */
                 public function __construct(private array $payload)
                 {
                     // Skip parent initialization.
