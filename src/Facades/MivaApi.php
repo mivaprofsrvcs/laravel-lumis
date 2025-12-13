@@ -5,16 +5,10 @@ namespace MVPS\Lumis\Facades;
 use Illuminate\Support\Facades\Facade;
 use MVPS\Lumis\MivaApiManager;
 
+// phpcs:disable Generic.Files.LineLength
 /**
  * @method static \MVPS\Lumis\Services\ApiClientService connection(?string $name = null)
- * @method static \pdeans\Miva\Api\Client listLoadQuery(
- *     string $function,
- *     array<int|string, string> $onDemandColumns = [],
- *     ?string $sort = null,
- *     ?int $count = null,
- *     ?int $offset = null,
- *     ?array<int|string, mixed> $filters = null
- * )
+ * @method static \pdeans\Miva\Api\Client listLoadQuery(string $function, array<int|string, string> $onDemandColumns = [], ?string $sort = null, ?int $count = null, ?int $offset = null, ?array<int|string, mixed> $filters = null)
  * @method static array<int|string, mixed>|null sendRequest(?string $functionName = null)
  * @method static \pdeans\Miva\Api\Client client()
  * @method static \MVPS\Lumis\Services\ApiClientService setClient(\pdeans\Miva\Api\Client $apiClient)
@@ -56,6 +50,7 @@ use MVPS\Lumis\MivaApiManager;
  * @mixin \MVPS\Lumis\Services\ApiClientService
  * @mixin \pdeans\Miva\Api\Client
  */
+// phpcs:enable Generic.Files.LineLength
 class MivaApi extends Facade
 {
     protected static function getFacadeAccessor(): string
