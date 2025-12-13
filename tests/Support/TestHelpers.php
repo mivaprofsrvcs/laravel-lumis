@@ -4,6 +4,8 @@ use MVPS\Lumis\Services\ApiClientService;
 
 /**
  * Decode the current Miva API request body into an array.
+ *
+ * @return array<string, mixed>
  */
 function decodeRequest(ApiClientService $service): array
 {
@@ -14,6 +16,9 @@ function decodeRequest(ApiClientService $service): array
 
 /**
  * Find a filter entry by its "name" within a decoded request body.
+ *
+ * @param  array<string, mixed>  $request
+ * @return array{name:string,value:mixed}|null
  */
 function findFilter(array $request, string $name): ?array
 {

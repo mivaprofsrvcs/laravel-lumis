@@ -7,8 +7,8 @@ use MVPS\Lumis\MivaStoreManager;
 
 /**
  * @method static \MVPS\Lumis\Services\StoreService connection(?string $name = null)
- * @method static array auth()
- * @method static array authHeader()
+ * @method static array{username:string,password:string}|array{} auth()
+ * @method static array{Authorization:string}|array{} authHeader()
  * @method static string authHeaderValue()
  * @method static string code()
  * @method static string graphicsPath()

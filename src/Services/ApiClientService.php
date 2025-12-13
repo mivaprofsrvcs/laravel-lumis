@@ -3,27 +3,23 @@
 namespace MVPS\Lumis\Services;
 
 use pdeans\Miva\Api\Client as MivaApiClient;
+use pdeans\Miva\Api\Response as MivaApiResponse;
 
 /**
  * @method \pdeans\Miva\Api\Client func(string $name)
- * @method \pdeans\Miva\Api\Client add(
- *     \pdeans\Miva\Api\Builders\FunctionBuilder $function = null
- * )
+ * @method \pdeans\Miva\Api\Client add(\pdeans\Miva\Api\Builders\FunctionBuilder $function = null)
  * @method \pdeans\Miva\Api\Client addHeader(string $headerName, string $headerValue)
- * @method \pdeans\Miva\Api\Client addHeaders(array $headers)
- * @method array getFunctionList()
- * @method array getHeaders()
- * @method \pdeans\Http\Request|null getPreviousRequest()
- * @method \pdeans\Http\Response|null getPreviousResponse()
- * @method array getOptions()
+ * @method \pdeans\Miva\Api\Client addHeaders(array<string, string> $headers)
+ * @method array<int, string> getFunctionList()
+ * @method array<string, string> getHeaders()
+ * @method \Psr\Http\Message\RequestInterface|null getPreviousRequest()
+ * @method \Psr\Http\Message\ResponseInterface|null getPreviousResponse()
+ * @method array<string, mixed> getOptions()
  * @method \pdeans\Miva\Api\Request getRequest()
- * @method string getRequestBody(
- *     int $encodeOpts = JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT,
- *     int $depth = 512
- * )
+ * @method string getRequestBody(int $encodeOpts = 4194432, int $depth = 512)
  * @method string getUrl()
  * @method string|\pdeans\Miva\Api\Response send(bool $rawResponse = false)
- * @method \pdeans\Miva\Api\Client setOptions(array $options)
+ * @method \pdeans\Miva\Api\Client setOptions(array<string, mixed> $options)
  * @method \pdeans\Miva\Api\Client setUrl(string $url)
  * @method \pdeans\Miva\Api\Client setTimeout(int $seconds)
  * @method \pdeans\Miva\Api\Client setBinaryEncoding(string $encoding)
@@ -32,11 +28,11 @@ use pdeans\Miva\Api\Client as MivaApiClient;
  * @method \pdeans\Miva\Api\Client setSshAuth(string $username, string $privateKey, string $algorithm = 'sha256')
  * @method \pdeans\Miva\Api\Client count(int $count)
  * @method \pdeans\Miva\Api\Client filter(string $filterName, mixed $filterValue)
- * @method \pdeans\Miva\Api\Client filters(array $filters)
+ * @method \pdeans\Miva\Api\Client filters(array<int|string, mixed> $filters)
  * @method \pdeans\Miva\Api\Client offset(int $offset)
- * @method \pdeans\Miva\Api\Client odc(array $columns)
- * @method \pdeans\Miva\Api\Client ondemandcolumns(array $columns)
- * @method \pdeans\Miva\Api\Client params(array $parameters)
+ * @method \pdeans\Miva\Api\Client odc(array<int|string, mixed> $columns)
+ * @method \pdeans\Miva\Api\Client ondemandcolumns(array<int|string, mixed> $columns)
+ * @method \pdeans\Miva\Api\Client params(array<int|string, mixed> $parameters)
  * @method \pdeans\Miva\Api\Client passphrase(string $passphrase)
  * @method \pdeans\Miva\Api\Client search(mixed ...$args)
  * @method \pdeans\Miva\Api\Client show(string $showValue)
@@ -104,7 +100,7 @@ class ApiClientService
             $this->client->odc($onDemandColumns);
         }
 
-        if ((string) $sort !== '') {
+        if ($sort !== null && $sort !== '') {
             $this->client->sort($sort);
         }
 
@@ -193,12 +189,18 @@ class ApiClientService
 
     /**
      * Send the request and optionally target a specific function's response.
+     *
+     * @return array<int|string, mixed>|null
      */
     public function sendRequest(?string $functionName = null): ?array
     {
         $response = $this->client->send();
 
-        return $response?->getResponse($functionName);
+        if ($response instanceof MivaApiResponse) {
+            return $response->getResponse($functionName);
+        }
+
+        return null;
     }
 
     /**
@@ -213,6 +215,8 @@ class ApiClientService
 
     /**
      * Dynamically handle calls into the client instance.
+     *
+     * @param  array<int|string, mixed>  $arguments
      */
     public function __call(string $method, array $arguments): mixed
     {

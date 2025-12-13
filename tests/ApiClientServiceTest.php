@@ -39,11 +39,16 @@ it('builds OR search via assoc map and sets function name', function () {
         ->and($req)->toHaveKey('Offset', 10)
         ->and($req)->toHaveKey('Filter');
 
-    expect($search)->not->toBeNull()
-        ->and($search['value'])->toHaveCount(2);
+    expect($search)->not->toBeNull();
+    expect($odc)->not->toBeNull();
 
-    expect($odc)->not->toBeNull()
-        ->and($odc['value'])->toContain('url', 'attributes');
+    if ($search !== null) {
+        expect($search['value'])->toHaveCount(2);
+    }
+
+    if ($odc !== null) {
+        expect($odc['value'])->toContain('url', 'attributes');
+    }
 });
 
 it('builds AND search via list-of-pairs with two top-level search entries', function () {
@@ -118,15 +123,20 @@ it('builds filters via single-key maps list', function () {
 
     expect($req['Function'] ?? null)->toBe('OrderList_Load_Query');
 
-    expect($odc)->not->toBeNull()
-        ->and($odc['value'])->toBe(['items']);
+    expect($odc)->not->toBeNull();
+    expect($search)->not->toBeNull();
 
-    expect($search)->not->toBeNull()
-        ->and($search['value'][0])->toMatchArray([
+    if ($odc !== null) {
+        expect($odc['value'])->toBe(['items']);
+    }
+
+    if ($search !== null) {
+        expect($search['value'][0])->toMatchArray([
             'field' => 'id',
             'operator' => 'EQ',
             'value' => 123,
         ]);
+    }
 });
 
 it('builds SUBWHERE group (OR) inside a single search value array', function () {
@@ -166,7 +176,17 @@ it('builds SUBWHERE group (OR) inside a single search value array', function () 
 
     $req = decodeRequest($apiClient);
     $search = findFilter($req, 'search');
-    $sub = collect($search['value'])->first(fn ($filter) => ($filter['operator'] ?? null) === 'SUBWHERE');
+    $sub = null;
+
+    if ($search !== null) {
+        foreach ($search['value'] as $filter) {
+            if (($filter['operator'] ?? null) === 'SUBWHERE') {
+                $sub = $filter;
+
+                break;
+            }
+        }
+    }
 
     expect($req['Function'] ?? null)->toBe('CustomerList_Load_Query');
 
@@ -190,8 +210,11 @@ it('applies ondemandcolumns via onDemandColumns argument', function () {
 
     expect($req['Function'] ?? null)->toBe('ProductList_Load_Query');
 
-    expect($odc)->not->toBeNull()
-        ->and($odc['value'])->toBe(['url']);
+    expect($odc)->not->toBeNull();
+
+    if ($odc !== null) {
+        expect($odc['value'])->toBe(['url']);
+    }
 });
 
 it('applies ondemandcolumns via filters parameter (and not the argument)', function () {
@@ -212,6 +235,9 @@ it('applies ondemandcolumns via filters parameter (and not the argument)', funct
 
     expect($req['Function'] ?? null)->toBe('ProductList_Load_Query');
 
-    expect($odc)->not->toBeNull()
-        ->and($odc['value'])->toBe(['attributes']);
+    expect($odc)->not->toBeNull();
+
+    if ($odc !== null) {
+        expect($odc['value'])->toBe(['attributes']);
+    }
 });

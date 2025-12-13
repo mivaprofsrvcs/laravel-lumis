@@ -43,6 +43,8 @@ final readonly class StoreService
 
     /**
      * Create a new Miva store service instance.
+     *
+     * @param  array{username?:string,password?:string}  $auth
      */
     public function __construct(
         string $code,
@@ -78,6 +80,8 @@ final readonly class StoreService
     /**
      * Get the HTTP Basic Authorization header array,
      * or an empty array if auth is not configured.
+     *
+     * @return array{Authorization:string}|array{}
      */
     public function authHeader(): array
     {

@@ -7,8 +7,13 @@ use MVPS\Lumis\Providers\LumisServiceProvider;
 use MVPS\Lumis\Providers\StoreServiceProvider;
 use MVPS\Lumis\Providers\MivaApiServiceProvider;
 
+/**
+ * @method \Illuminate\Testing\PendingCommand artisan(string $command, array<string, mixed> $parameters = [])
+ */
 class TestCase extends Orchestra
 {
+    public string $configPath = '';
+
     /**
      * {@inheritdoc}
      */

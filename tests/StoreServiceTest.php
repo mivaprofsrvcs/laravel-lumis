@@ -32,6 +32,8 @@ it('includes basic auth header when configured', function () {
 
     $store = resolve(StoreService::class);
 
-    expect($store->authHeader())->toHaveKey('Authorization')
-        ->and($store->authHeader()['Authorization'])->toStartWith('Basic ');
+    $authHeader = $store->authHeader();
+
+    expect($authHeader)->toHaveKey('Authorization');
+    expect($authHeader['Authorization'] ?? null)->toStartWith('Basic ');
 });

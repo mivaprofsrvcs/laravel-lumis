@@ -33,6 +33,8 @@ class MivaApiServiceProvider extends ServiceProvider implements DeferrableProvid
 
     /**
      * @inheritdoc
+     *
+     * @return array<int, class-string>
      */
     public function provides(): array
     {

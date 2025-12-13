@@ -27,6 +27,8 @@ class StoreServiceProvider extends ServiceProvider implements DeferrableProvider
 
     /**
      * @inheritdoc
+     *
+     * @return array<int, class-string>
      */
     public function provides(): array
     {
