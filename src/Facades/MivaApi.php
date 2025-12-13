@@ -5,48 +5,40 @@ namespace MVPS\Lumis\Facades;
 use Illuminate\Support\Facades\Facade;
 use MVPS\Lumis\MivaApiManager;
 
+// phpcs:disable Generic.Files.LineLength
 /**
  * @method static \MVPS\Lumis\Services\ApiClientService connection(?string $name = null)
- * @method static \pdeans\Miva\Api\Client listLoadQuery(
- *     string $function,
- *     array $onDemandColumns = [],
- *     ?string $sort = null,
- *     ?int $count = null,
- *     ?int $offset = null,
- *     ?array $filters = null
- * )
- * @method static array|null sendRequest(?string $functionName = null)
+ * @method static \pdeans\Miva\Api\Client listLoadQuery(string $function, array<int|string, string> $onDemandColumns = [], ?string $sort = null, ?int $count = null, ?int $offset = null, ?array<int|string, mixed> $filters = null)
+ * @method static array<int|string, mixed>|null sendRequest(?string $functionName = null)
  * @method static \pdeans\Miva\Api\Client client()
- * @method static \MVPS\Lumis\Services\ApiClientService setClient(
- *     \pdeans\Miva\Api\Client $apiClient
- * )
+ * @method static \MVPS\Lumis\Services\ApiClientService setClient(\pdeans\Miva\Api\Client $apiClient)
  * @method static \pdeans\Miva\Api\Client func(string $name)
- * @method static \pdeans\Miva\Api\Client add(
- *     \pdeans\Miva\Api\Builders\FunctionBuilder $function = null
- * )
+ * @method static \pdeans\Miva\Api\Client add(\pdeans\Miva\Api\Builders\FunctionBuilder $function = null)
  * @method static \pdeans\Miva\Api\Client addHeader(string $headerName, string $headerValue)
- * @method static \pdeans\Miva\Api\Client addHeaders(array $headers)
- * @method static array getFunctionList()
- * @method static array getHeaders()
- * @method static \pdeans\Http\Request|null getPreviousRequest()
- * @method static \pdeans\Http\Response|null getPreviousResponse()
- * @method static array getOptions()
+ * @method static \pdeans\Miva\Api\Client addHeaders(array<string, string> $headers)
+ * @method static array<int, string> getFunctionList()
+ * @method static array<string, string> getHeaders()
+ * @method static \Psr\Http\Message\RequestInterface|null getPreviousRequest()
+ * @method static \Psr\Http\Message\ResponseInterface|null getPreviousResponse()
+ * @method static array<string, mixed> getOptions()
  * @method static \pdeans\Miva\Api\Request getRequest()
- * @method static string getRequestBody(
- *     int $encodeOpts = JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT,
- *     int $depth = 512
- * )
+ * @method static string getRequestBody(int $encodeOpts = 4194432, int $depth = 512)
  * @method static string getUrl()
  * @method static string|\pdeans\Miva\Api\Response send(bool $rawResponse = false)
- * @method static \pdeans\Miva\Api\Client setOptions(array $options)
+ * @method static \pdeans\Miva\Api\Client setOptions(array<string, mixed> $options)
  * @method static \pdeans\Miva\Api\Client setUrl(string $url)
+ * @method static \pdeans\Miva\Api\Client setTimeout(int $seconds)
+ * @method static \pdeans\Miva\Api\Client setBinaryEncoding(string $encoding)
+ * @method static \pdeans\Miva\Api\Client setOperationsRange(int $start, ?int $end = null)
+ * @method static \pdeans\Miva\Api\Client clearOperationsRange()
+ * @method static \pdeans\Miva\Api\Client setSshAuth(string $username, string $privateKey, string $algorithm = 'sha256')
  * @method static \pdeans\Miva\Api\Client count(int $count)
  * @method static \pdeans\Miva\Api\Client filter(string $filterName, mixed $filterValue)
- * @method static \pdeans\Miva\Api\Client filters(array $filters)
+ * @method static \pdeans\Miva\Api\Client filters(array<int|string, mixed> $filters)
  * @method static \pdeans\Miva\Api\Client offset(int $offset)
- * @method static \pdeans\Miva\Api\Client odc(array $columns)
- * @method static \pdeans\Miva\Api\Client ondemandcolumns(array $columns)
- * @method static \pdeans\Miva\Api\Client params(array $parameters)
+ * @method static \pdeans\Miva\Api\Client odc(array<int|string, mixed> $columns)
+ * @method static \pdeans\Miva\Api\Client ondemandcolumns(array<int|string, mixed> $columns)
+ * @method static \pdeans\Miva\Api\Client params(array<int|string, mixed> $parameters)
  * @method static \pdeans\Miva\Api\Client passphrase(string $passphrase)
  * @method static \pdeans\Miva\Api\Client search(mixed ...$args)
  * @method static \pdeans\Miva\Api\Client show(string $showValue)
@@ -58,10 +50,11 @@ use MVPS\Lumis\MivaApiManager;
  * @mixin \MVPS\Lumis\Services\ApiClientService
  * @mixin \pdeans\Miva\Api\Client
  */
+// phpcs:enable Generic.Files.LineLength
 class MivaApi extends Facade
 {
-	protected static function getFacadeAccessor(): string
-	{
-		return MivaApiManager::class;
-	}
+    protected static function getFacadeAccessor(): string
+    {
+        return MivaApiManager::class;
+    }
 }

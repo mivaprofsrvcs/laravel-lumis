@@ -1,68 +1,77 @@
 {
-	"name": "mvps/laravel-lumis",
-	"description": "Laravel package providing MVPS Lumis common functionality for integration and task-based services.",
-	"type": "library",
-	"license": "MIT",
-	"keywords": [
-		"Lumis",
-		"Laravel-Lumis",
-		"MVPS",
-		"Miva Professional Services",
-		"Miva"
-	],
-	"support": {
-		"issues": "https://github.com/mivaprofsrvcs/laravel-lumis/issues",
-		"source": "https://github.com/mivaprofsrvcs/laravel-lumis"
-	},
-	"authors": [
-		{
-			"name": "Patrick Stearns",
-			"email": "pstearns@miva.com"
-		}
-	],
-	"require": {
-		"php": "^8.3",
-		"illuminate/support": "^10.0|^11.0|^12.0",
-		"pdeans/miva-api": "^2.1.1"
-	},
-	"require-dev": {
-		"nunomaduro/collision": "^7.12",
-		"orchestra/testbench": "^8.18",
-		"pestphp/pest": "^2.36",
-		"pestphp/pest-plugin-laravel": "^2.2"
-	},
-	"autoload": {
-		"psr-4": {
-			"MVPS\\Lumis\\": "src/"
-		}
-	},
-	"autoload-dev": {
-		"psr-4": {
-			"Tests\\": "tests/"
-		}
-	},
-	"scripts": {
-		"test": "pest"
-	},
-	"extra": {
-		"laravel": {
-			"providers": [
-				"MVPS\\Lumis\\Providers\\LumisServiceProvider",
-				"MVPS\\Lumis\\Providers\\MivaApiServiceProvider",
-				"MVPS\\Lumis\\Providers\\StoreServiceProvider"
-			],
-			"aliases": {
-				"MivaApi": "MVPS\\Lumis\\Facades\\MivaApi",
-				"Store": "MVPS\\Lumis\\Facades\\Store"
-			}
-		}
-	},
-	"config": {
-		"sort-packages": true,
-		"allow-plugins": {
-			"pestphp/pest-plugin": true
-		}
-	},
-	"minimum-stability": "stable",
-	"prefer-stable": true
+    "name": "mvps/laravel-lumis",
+    "description": "Laravel package providing MVPS Lumis common functionality for integration and task-based services.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "Lumis",
+        "Laravel-Lumis",
+        "MVPS",
+        "Miva Professional Services",
+        "Miva"
+    ],
+    "support": {
+        "issues": "https://github.com/mivaprofsrvcs/laravel-lumis/issues",
+        "source": "https://github.com/mivaprofsrvcs/laravel-lumis"
+    },
+    "authors": [
+        {
+            "name": "Patrick Stearns",
+            "email": "pstearns@miva.com"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "illuminate/support": "^10.0|^11.0|^12.0",
+        "pdeans/miva-api": "^3.0"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.26",
+        "nunomaduro/collision": "^8.8",
+        "orchestra/testbench": "^10.8",
+        "pestphp/pest": "^4.1",
+        "pestphp/pest-plugin-laravel": "^4.0",
+        "phpstan/phpstan": "^2.1",
+        "symfony/var-dumper": "^7.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "MVPS\\Lumis\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "pest",
+        "phpstan": "phpstan analyse --memory-limit=512M",
+        "pint": "pint --test",
+        "lint": [
+            "@phpstan",
+            "@pint"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "MVPS\\Lumis\\Providers\\LumisServiceProvider",
+                "MVPS\\Lumis\\Providers\\MivaApiServiceProvider",
+                "MVPS\\Lumis\\Providers\\StoreServiceProvider"
+            ],
+            "aliases": {
+                "MivaApi": "MVPS\\Lumis\\Facades\\MivaApi",
+                "Store": "MVPS\\Lumis\\Facades\\Store"
+            }
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
 }

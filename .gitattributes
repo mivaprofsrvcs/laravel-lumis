@@ -45,6 +45,8 @@
 /styleci.yml        export-ignore
 /composer.lock      export-ignore
 /extra              export-ignore
+/CHANGELOG.md       export-ignore
+/AGENTS.md          export-ignore
 
 build/** linguist-generated
 dist/**  linguist-generated
