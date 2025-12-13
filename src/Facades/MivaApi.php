@@ -7,7 +7,14 @@ use MVPS\Lumis\MivaApiManager;
 
 /**
  * @method static \MVPS\Lumis\Services\ApiClientService connection(?string $name = null)
- * @method static \pdeans\Miva\Api\Client listLoadQuery(string $function, array<int|string, string> $onDemandColumns = [], ?string $sort = null, ?int $count = null, ?int $offset = null, ?array<int|string, mixed> $filters = null)
+ * @method static \pdeans\Miva\Api\Client listLoadQuery(
+ *     string $function,
+ *     array<int|string, string> $onDemandColumns = [],
+ *     ?string $sort = null,
+ *     ?int $count = null,
+ *     ?int $offset = null,
+ *     ?array<int|string, mixed> $filters = null
+ * )
  * @method static array<int|string, mixed>|null sendRequest(?string $functionName = null)
  * @method static \pdeans\Miva\Api\Client client()
  * @method static \MVPS\Lumis\Services\ApiClientService setClient(\pdeans\Miva\Api\Client $apiClient)
