@@ -1,7 +1,6 @@
 <?php
 
 use GuzzleHttp\Client;
-use InvalidArgumentException;
 use MVPS\Lumis\Facades\MivaApi;
 use MVPS\Lumis\MivaApiManager;
 use MVPS\Lumis\Services\ApiClientService;
