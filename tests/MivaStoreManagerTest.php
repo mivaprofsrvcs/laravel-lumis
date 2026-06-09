@@ -1,6 +1,5 @@
 <?php
 
-use InvalidArgumentException;
 use MVPS\Lumis\Facades\Store;
 use MVPS\Lumis\MivaStoreManager;
 use MVPS\Lumis\Services\StoreService;
