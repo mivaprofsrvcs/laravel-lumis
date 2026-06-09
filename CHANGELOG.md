@@ -1,6 +1,6 @@
 # Release Notes
 
-## [v2.1.0](https://github.com/mivaprofsrvcs/laravel-lumis/compare/2.0.0...2.1.1)
+## [v2.1.0](https://github.com/mivaprofsrvcs/laravel-lumis/compare/2.0.0...2.1.0)
 
 - feat: add Laravel 13 support (`illuminate/support: ^13.0`)
 - build: widen `orchestra/testbench` to `^10.8|^11.0` so the suite runs against Laravel 12 and 13
