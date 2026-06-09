@@ -47,6 +47,7 @@
 /extra              export-ignore
 /CHANGELOG.md       export-ignore
 /AGENTS.md          export-ignore
+/CLAUDE.md          export-ignore
 
 build/** linguist-generated
 dist/**  linguist-generated
